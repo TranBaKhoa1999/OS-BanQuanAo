@@ -6,7 +6,8 @@ require '../vendor/autoload.php';
 require '../src/config/db.php';
 
 $app = new \Slim\App;
-
+//route brand
+require_once '../src/routes/brand.php';
 // route category
 require_once '../src/routes/category.php';
 //route product

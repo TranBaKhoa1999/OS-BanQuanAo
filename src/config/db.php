@@ -6,12 +6,13 @@
 		$host = 'localhost';
 		$username = 'root';
 		$password = '';
-		$dbname = 'os-banquanao';
+		$dbname = 'os_banquanao';
 
 	  try{
 		$this->db = new PDO('mysql:host='.$host.';dbname='.$dbname,$username,$password);
 
 		$this->db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		echo 'success';
 	  }
 	  catch(PDOException $e){
 		  echo 'ERR: '. $e->getMessage();
