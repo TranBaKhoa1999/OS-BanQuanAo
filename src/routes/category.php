@@ -1,0 +1,23 @@
+<?php
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+
+require '../vendor/autoload.php';
+require '../src/models/categoryModel.php';
+// $app = new \Slim\App;
+
+
+//Get All Categories
+$app->get('/api/categories', function ($request, $response, $args) {
+    $model = new CategoryModel();
+    $model->GetAll();
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
+
+//Get Single Category
+$app->get('/api/categories/{id}', function ($request, $response, $args) {
+    $id = $request->getAttribute('id');
+    $model = new CategoryModel();
+    $model->GetSingle($id);
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
