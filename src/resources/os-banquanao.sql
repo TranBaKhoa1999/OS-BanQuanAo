@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2020 at 01:38 PM
+-- Generation Time: Sep 17, 2020 at 10:14 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -212,49 +212,37 @@ ALTER TABLE `attribute`
 -- Indexes for table `billing`
 --
 ALTER TABLE `billing`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Shipping_Method` (`Shipping_Method`),
-  ADD UNIQUE KEY `Email` (`Email`),
-  ADD UNIQUE KEY `Payment_Method` (`Payment_Method`),
-  ADD UNIQUE KEY `Status` (`Status`);
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Indexes for table `billing_detail`
 --
 ALTER TABLE `billing_detail`
-  ADD PRIMARY KEY (`Id_Billing`,`Id_Product`),
-  ADD UNIQUE KEY `Count` (`Count`),
-  ADD UNIQUE KEY `Price_Buy` (`Price_Buy`);
+  ADD PRIMARY KEY (`Id_Billing`,`Id_Product`);
 
 --
 -- Indexes for table `brand`
 --
 ALTER TABLE `brand`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Name` (`Name`);
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Name` (`Name`),
-  ADD UNIQUE KEY `Brand` (`Brand`);
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
-  ADD PRIMARY KEY (`Email`),
-  ADD UNIQUE KEY `Name` (`Name`);
+  ADD PRIMARY KEY (`Email`);
 
 --
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
-  ADD PRIMARY KEY (`Id`),
-  ADD UNIQUE KEY `Attribute` (`Attribute`),
-  ADD UNIQUE KEY `Name` (`Name`);
+  ADD PRIMARY KEY (`Id`);
 
 --
 -- Indexes for table `product_cate`
