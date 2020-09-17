@@ -10,7 +10,7 @@ require '../src/models/categoryModel.php';
 //Get All Categories
 $app->get('/api/categories', function ($request, $response, $args) {
     $model = new CategoryModel();
-    $model->GetAll();
+    echo json_encode($model->GetAll());
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -18,7 +18,7 @@ $app->get('/api/categories', function ($request, $response, $args) {
 $app->get('/api/categories/{id}', function ($request, $response, $args) {
     $id = $request->getAttribute('id');
     $model = new CategoryModel();
-    $model->GetSingle($id);
+    echo json_encode($model->GetSingle($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -26,7 +26,7 @@ $app->get('/api/categories/{id}', function ($request, $response, $args) {
 $app->post('/api/categories/add', function ($request, $response, $args) {
     $tenloai = $request->getParam('tenloai');
     $model = new CategoryModel();
-    $model->Add($tenloai);
+    echo json_encode($model->Add($tenloai));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -37,7 +37,7 @@ $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
     $tenloai = $request->getParam('tenloai');
 
     $model = new CategoryModel();
-    $model->Update($id,$tenloai);
+    echo json_encode($model->Update($id,$tenloai));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -47,6 +47,6 @@ $app->delete('/api/categories/delete/{id}', function ($request, $response, $args
     $id = $request->getAttribute('id');
 
     $model = new CategoryModel();
-    $model->Delete($id);
+    echo json_encode($model->Delete($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });

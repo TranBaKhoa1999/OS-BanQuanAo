@@ -9,10 +9,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $SanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($SanPham);
+                return($SanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }
@@ -23,10 +23,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $SanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($SanPham);
+                return($SanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }
@@ -40,10 +40,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $SanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($SanPham);
+                return($SanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }
@@ -61,10 +61,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $SanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($SanPham);
+                return($SanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }
@@ -81,10 +81,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $SanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($SanPham);
+                return($SanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }

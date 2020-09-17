@@ -10,7 +10,7 @@ require '../src/models/brandModel.php';
 //Get All Categories
 $app->get('/api/brands', function ($request, $response, $args) {
     $model = new BrandModel();
-    $model->GetAll();
+    echo json_encode($model->GetAll());
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -18,7 +18,7 @@ $app->get('/api/brands', function ($request, $response, $args) {
 $app->get('/api/brands/{id}', function ($request, $response, $args) {
     $id = $request->getAttribute('id');
     $model = new BrandModel();
-    $model->GetSingle($id);
+    echo json_encode($model->GetSingle($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 

@@ -19,10 +19,10 @@ require_once "../src/config/db.php";
                 // }
                 // header('Content-Type:application/json; charset=UTF-8');
                 $loaiSanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($loaiSanPham);
+                return($loaiSanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }
@@ -33,10 +33,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $loaiSanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                echo json_encode($loaiSanPham);
+                return($loaiSanPham);
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'not found')
                 );
             }
@@ -48,12 +48,12 @@ require_once "../src/config/db.php";
             $data->bindParam(':ten_loai',$tenloai);
 
             if($data->execute()){
-                echo json_encode(
+                return(
                     array('message'=>'add success!')
                 );
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'add fail!')
                 );
             }
@@ -65,12 +65,12 @@ require_once "../src/config/db.php";
             $data->bindParam(':ten_loai',$tenloai);
             $data->execute();
             if($data->execute()){
-                echo json_encode(
+                return(
                     array('message'=>'update success!')
                 );
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'update fail!')
                 );
             }
@@ -80,12 +80,12 @@ require_once "../src/config/db.php";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->execute()){
-                echo json_encode(
+                return(
                     array('message'=>'delete success!')
                 );
             }
             else{
-                echo json_encode(
+                return(
                     array('message'=>'delete fail!')
                 );
             }
