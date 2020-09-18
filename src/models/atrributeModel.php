@@ -2,14 +2,14 @@
 
 require_once "../src/config/db.php";
 
-    class BrandModel extends DBConnection {
+    class AttributeModel extends DBConnection {
         
         public function GetAll(){
-            $data = $this->runQuery('select * from brand');
+            $data = $this->runQuery('select * from attribute');
             $data->execute();
             if($data->rowcount() > 0){
-                $brand = $data->fetchAll(PDO::FETCH_OBJ);
-                return ($brand);
+                $attribute = $data->fetchAll(PDO::FETCH_OBJ);
+                return ($attribute);
             }
             else{
                 return (
@@ -18,12 +18,12 @@ require_once "../src/config/db.php";
             }
         }
         public function GetSingle($id){
-            $sql = "SELECT * FROM brand WHERE id = $id";
+            $sql = "SELECT * FROM attribute WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
-                $brand = $data->fetchAll(PDO::FETCH_OBJ);
-                return $brand;
+                $attribute = $data->fetchAll(PDO::FETCH_OBJ);
+                return $attribute;
             }
             else{
                 return (
@@ -31,13 +31,12 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        public function Add($name,$logo,$description){
-            $sql = "INSERT INTO brand(name,logo,description) VALUE(:name,:logo,:description)";
+        public function Add($size,$color){
+            $sql = "INSERT INTO attribute(size,color) VALUE(:size,:color)";
 
             $data = $this->runQuery($sql);
-            $data->bindParam(':name',$name);
-            $data->bindParam(':logo',$logo);
-            $data->bindParam(':description',$description);
+            $data->bindParam(':size',$size);
+            $data->bindParam(':color',$color);
 
             if($data->execute()){
                 return (
@@ -51,12 +50,11 @@ require_once "../src/config/db.php";
             }
         }
         
-        public function Update($id,$name,$logo,$description){
-            $sql = "UPDATE brand SET name =:name, logo =:logo, description = :description WHERE id = $id";
+        public function Update($id,$size,$color){
+            $sql = "UPDATE attribute SET size =:size, color =:color WHERE id = $id";
             $data = $this->runQuery($sql);
-            $data->bindParam(':name',$name);
-            $data->bindParam(':logo',$logo);
-            $data->bindParam(':description',$description);
+            $data->bindParam(':size',$size);
+            $data->bindParam(':color',$color);
 
             $data->execute();
             if($data->execute()){
@@ -71,7 +69,7 @@ require_once "../src/config/db.php";
             }
         }
         public function Delete($id){
-            $sql = "DELETE FROM brand WHERE id = $id";
+            $sql = "DELETE FROM attribute WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->execute()){

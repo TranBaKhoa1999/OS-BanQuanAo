@@ -21,12 +21,25 @@ $app->get('/api/categories/{id}', function ($request, $response, $args) {
     echo json_encode($model->GetSingle($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
+//get categories by brand
+// $app->get('/api/categories/brand/{id}', function ($request, $response, $args) {
+//     $id = $request->getAttribute('id');
+//     $model = new CategoryModel();
+//     echo json_encode($model->GetCategoriesByBrand($id));
+//     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+// });
 
 //add category
 $app->post('/api/categories/add', function ($request, $response, $args) {
-    $tenloai = $request->getParam('tenloai');
-    $model = new CategoryModel();
-    echo json_encode($model->Add($tenloai));
+    $name           = $request->getParam('name');
+    $image          = $request->getParam('image');
+    $description    = $request->getParam('description');
+    $parentCategory = $request->getParam('parentcategory');
+    $brand          = $request->getParam('brand');
+    $count          = $request->getParam('count');
+
+    $model          = new CategoryModel();
+    echo json_encode($model->Add($name,$image,$description,$parentCategory,$brand,$count));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -34,10 +47,14 @@ $app->post('/api/categories/add', function ($request, $response, $args) {
 $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
 
     $id = $request->getAttribute('id');
-    $tenloai = $request->getParam('tenloai');
+    $name           = $request->getParam('name');
+    $image          = $request->getParam('image');
+    $description    = $request->getParam('description');
+    $parentCategory = $request->getParam('parentcategory');
+    $count          = $request->getParam('count');
 
     $model = new CategoryModel();
-    echo json_encode($model->Update($id,$tenloai));
+    echo json_encode($model->Update($id,$name,$image,$description,$parentCategory,$brand,$count));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 

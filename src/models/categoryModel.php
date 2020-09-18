@@ -3,23 +3,14 @@
 require_once "../src/config/db.php";
 
     class CategoryModel extends DBConnection {
-        
+
+        // ------------------------------------------------- GET---------------------------------------------------
         public function GetAll(){
-            $data = $this->runQuery('select * from loaisanpham');
+            $data = $this->runQuery('select * from category');
             $data->execute();
             if($data->rowcount() > 0){
-                // $loaiSanPham = array();
-                // while($row = $data->fetch(PDO::FETCH_ASSOC)){
-            
-                //     $item = array(
-                //         'id'=>$row['id'],
-                //         'tenloai'=>$row['tenloai']
-                //     );
-                //     array_push($loaiSanPham, $item);
-                // }
-                // header('Content-Type:application/json; charset=UTF-8');
-                $loaiSanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                return($loaiSanPham);
+                $category = $data->fetchAll(PDO::FETCH_OBJ);
+                return($category);
             }
             else{
                 return(
@@ -28,12 +19,12 @@ require_once "../src/config/db.php";
             }
         }
         public function GetSingle($id){
-            $sql = "SELECT * FROM loaisanpham WHERE id = $id";
+            $sql = "SELECT * FROM category WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
-                $loaiSanPham = $data->fetchAll(PDO::FETCH_OBJ);
-                return($loaiSanPham);
+                $category = $data->fetchAll(PDO::FETCH_OBJ);
+                return($category);
             }
             else{
                 return(
@@ -41,11 +32,30 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        public function Add($tenloai){
-            $sql = "INSERT INTO loaisanpham(tenloai) VALUE(:ten_loai)";
+        public function GetCategoriesByBrand($id){
+            $sql = "SELECT * FROM category WHERE brand = $id";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->rowcount() > 0){
+                $category = $data->fetchAll(PDO::FETCH_OBJ);
+                return($category);
+            }
+            else{
+                return(
+                    array('message'=>'not found')
+                );
+            }
+        }
+        //----------------------------------------------- ADD -------------------------------------
+        public function Add($name,$image,$description,$parentCategory,$count){
+            $sql = "INSERT INTO category(name,image,description,parentcategory,count) VALUE(:name,:image,:description,:parentCategory,:count)";
 
             $data = $this->runQuery($sql);
-            $data->bindParam(':ten_loai',$tenloai);
+            $data->bindParam(':name',$name);
+            $data->bindParam(':image',$image);
+            $data->bindParam(':description',$description);
+            $data->bindParam(':parentCategory',$parentCategory);
+            $data->bindParam(':count',$count);
 
             if($data->execute()){
                 return(
@@ -58,11 +68,17 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        
-        public function Update($id,$tenloai){
-            $sql = "UPDATE loaisanpham SET tenloai =:ten_loai WHERE id = $id";
+        // ------------------------------------------ UPDATE ------------------------------------------
+        public function Update($id,$name,$image,$description,$parentCategory,$count){
+            $sql = "UPDATE category SET name = :name, image =:image, description =:description, parentcategory =:parentCategory,brand =:brand, count=:count WHERE id = $id";
             $data = $this->runQuery($sql);
-            $data->bindParam(':ten_loai',$tenloai);
+
+            $data->bindParam(':name',$name);
+            $data->bindParam(':image',$image);
+            $data->bindParam(':description',$description);
+            $data->bindParam(':parentCategory',$parentCategory);
+            $data->bindParam(':count',$count);
+
             $data->execute();
             if($data->execute()){
                 return(
@@ -75,8 +91,9 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        // ---------------------------------------- DELETE -------------------------------------------
         public function Delete($id){
-            $sql = "DELETE FROM loaisanpham WHERE id = $id";
+            $sql = "DELETE FROM category WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->execute()){

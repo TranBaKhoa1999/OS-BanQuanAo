@@ -2,14 +2,14 @@
 
 require_once "../src/config/db.php";
 
-    class BrandModel extends DBConnection {
+    class Product_cateModel extends DBConnection {
         
         public function GetAll(){
-            $data = $this->runQuery('select * from brand');
+            $data = $this->runQuery('select * from product_cate');
             $data->execute();
             if($data->rowcount() > 0){
-                $brand = $data->fetchAll(PDO::FETCH_OBJ);
-                return ($brand);
+                $product_cate = $data->fetchAll(PDO::FETCH_OBJ);
+                return ($product_cate);
             }
             else{
                 return (
@@ -18,12 +18,12 @@ require_once "../src/config/db.php";
             }
         }
         public function GetSingle($id){
-            $sql = "SELECT * FROM brand WHERE id = $id";
+            $sql = "SELECT * FROM product_cate WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
-                $brand = $data->fetchAll(PDO::FETCH_OBJ);
-                return $brand;
+                $product_cate = $data->fetchAll(PDO::FETCH_OBJ);
+                return $product_cate;
             }
             else{
                 return (
@@ -31,8 +31,9 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        // --------------------------------------------------------------- ADD ---------------------------------------------
         public function Add($name,$logo,$description){
-            $sql = "INSERT INTO brand(name,logo,description) VALUE(:name,:logo,:description)";
+            $sql = "INSERT INTO product_cate(name,logo,description) VALUE(:name,:logo,:description)";
 
             $data = $this->runQuery($sql);
             $data->bindParam(':name',$name);
@@ -50,9 +51,9 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        
+        // --------------------------------------------------------------- UPDATE ---------------------------------------------
         public function Update($id,$name,$logo,$description){
-            $sql = "UPDATE brand SET name =:name, logo =:logo, description = :description WHERE id = $id";
+            $sql = "UPDATE product_cate SET name =:name, logo =:logo, description = :description WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->bindParam(':name',$name);
             $data->bindParam(':logo',$logo);
@@ -70,8 +71,9 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        // --------------------------------------------------------------- DELETE ---------------------------------------------
         public function Delete($id){
-            $sql = "DELETE FROM brand WHERE id = $id";
+            $sql = "DELETE FROM product_cate WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->execute()){
