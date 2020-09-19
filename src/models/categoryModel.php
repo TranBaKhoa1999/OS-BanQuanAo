@@ -18,6 +18,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         public function GetSingle($id){
             $sql = "SELECT * FROM category WHERE id = $id";
             $data = $this->runQuery($sql);
@@ -32,20 +33,22 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        public function GetCategoriesByBrand($id){
-            $sql = "SELECT * FROM category WHERE brand = $id";
-            $data = $this->runQuery($sql);
-            $data->execute();
-            if($data->rowcount() > 0){
-                $category = $data->fetchAll(PDO::FETCH_OBJ);
-                return($category);
-            }
-            else{
-                return(
-                    array('message'=>'not found')
-                );
-            }
-        }
+
+        // public function GetCategoriesByBrand($id){
+        //     $sql = "SELECT * FROM category WHERE brand = $id";
+        //     $data = $this->runQuery($sql);
+        //     $data->execute();
+        //     if($data->rowcount() > 0){
+        //         $category = $data->fetchAll(PDO::FETCH_OBJ);
+        //         return($category);
+        //     }
+        //     else{
+        //         return(
+        //             array('message'=>'not found')
+        //         );
+        //     }
+        // }
+
         //----------------------------------------------- ADD -------------------------------------
         public function Add($name,$image,$description,$parentCategory,$count){
             $sql = "INSERT INTO category(name,image,description,parentcategory,count) VALUE(:name,:image,:description,:parentCategory,:count)";
@@ -68,15 +71,35 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         // ------------------------------------------ UPDATE ------------------------------------------
-        public function Update($id,$name,$image,$description,$parentCategory,$count){
-            $sql = "UPDATE category SET name = :name, image =:image, description =:description, parentcategory =:parentCategory,brand =:brand, count=:count WHERE id = $id";
+        public function Update($id,$name,$image,$description,$parentCategory){
+            $sql = "UPDATE category SET name = :name, image =:image, description =:description, parentcategory =:parentCategory,brand =:brand WHERE id = $id";
             $data = $this->runQuery($sql);
 
             $data->bindParam(':name',$name);
             $data->bindParam(':image',$image);
             $data->bindParam(':description',$description);
             $data->bindParam(':parentCategory',$parentCategory);
+            // $data->bindParam(':count',$count);
+
+            $data->execute();
+            if($data->execute()){
+                return(
+                    array('message'=>'update success!')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'update fail!')
+                );
+            }
+        }
+
+        public function UpdateCount($id, $count){
+            $sql = "UPDATE category SET count=:count WHERE id = $id";
+            $data = $this->runQuery($sql);
+
             $data->bindParam(':count',$count);
 
             $data->execute();
@@ -91,6 +114,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         // ---------------------------------------- DELETE -------------------------------------------
         public function Delete($id){
             $sql = "DELETE FROM category WHERE id = $id";
