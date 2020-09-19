@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 17, 2020 at 10:14 AM
+-- Generation Time: Sep 17, 2020 at 01:01 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -42,9 +42,8 @@ CREATE TABLE `attribute` (
 CREATE TABLE `billing` (
   `Id` int(11) NOT NULL,
   `Email` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL,
-  `Payment_Method` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `Payment_Method` int(11) NOT NULL,
   `Shipping_Method` int(11) NOT NULL,
-  `Tax` float NOT NULL,
   `Total` float NOT NULL,
   `Date` datetime NOT NULL,
   `Status` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL
@@ -88,7 +87,6 @@ CREATE TABLE `category` (
   `Image` varchar(500) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `Description` longtext COLLATE utf8mb4_vietnamese_ci DEFAULT NULL,
   `ParentCategory` int(11) DEFAULT NULL,
-  `Brand` int(11) DEFAULT NULL,
   `Count` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
@@ -110,6 +108,17 @@ CREATE TABLE `customer` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `payment_method`
+--
+
+CREATE TABLE `payment_method` (
+  `Id` int(11) NOT NULL,
+  `Name` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `product`
 --
 
@@ -117,6 +126,7 @@ CREATE TABLE `product` (
   `Id` int(11) NOT NULL,
   `Name` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `Image` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL,
+  `Brand` int(11) NOT NULL,
   `SKU` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `Attribute` int(11) NOT NULL,
   `Price` float NOT NULL,
@@ -140,17 +150,6 @@ CREATE TABLE `product_cate` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `product_tag`
---
-
-CREATE TABLE `product_tag` (
-  `Id_Product` int(11) NOT NULL,
-  `Id_Tag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `shipping_method`
 --
 
@@ -168,7 +167,6 @@ CREATE TABLE `shipping_method` (
 
 CREATE TABLE `statistical` (
   `Id_Product` int(11) NOT NULL,
-  `Rank` int(11) DEFAULT NULL,
   `View` int(11) DEFAULT NULL,
   `Purchase` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
@@ -183,19 +181,7 @@ CREATE TABLE `storage` (
   `Id_Product` int(11) NOT NULL,
   `Price_In` float NOT NULL,
   `Count` int(11) NOT NULL DEFAULT 0,
-  `Tax` float NOT NULL,
   `Stock` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tag`
---
-
-CREATE TABLE `tag` (
-  `Id` int(11) NOT NULL,
-  `Tag_Name` varchar(500) COLLATE utf8mb4_vietnamese_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
@@ -239,6 +225,12 @@ ALTER TABLE `customer`
   ADD PRIMARY KEY (`Email`);
 
 --
+-- Indexes for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  ADD PRIMARY KEY (`Id`);
+
+--
 -- Indexes for table `product`
 --
 ALTER TABLE `product`
@@ -249,12 +241,6 @@ ALTER TABLE `product`
 --
 ALTER TABLE `product_cate`
   ADD PRIMARY KEY (`Id_Category`,`Id_Product`);
-
---
--- Indexes for table `product_tag`
---
-ALTER TABLE `product_tag`
-  ADD PRIMARY KEY (`Id_Product`,`Id_Tag`);
 
 --
 -- Indexes for table `shipping_method`
@@ -273,12 +259,6 @@ ALTER TABLE `statistical`
 --
 ALTER TABLE `storage`
   ADD PRIMARY KEY (`Id_Product`);
-
---
--- Indexes for table `tag`
---
-ALTER TABLE `tag`
-  ADD PRIMARY KEY (`Id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -309,6 +289,12 @@ ALTER TABLE `category`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `payment_method`
+--
+ALTER TABLE `payment_method`
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
@@ -318,12 +304,6 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `shipping_method`
 --
 ALTER TABLE `shipping_method`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `tag`
---
-ALTER TABLE `tag`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
