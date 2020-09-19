@@ -3,10 +3,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 // require '../vendor/autoload.php';
-// require '../src/models/productModel.php';
-require '../src/services/productService.php';
-// $app = new \Slim\App;
 
+require '../src/services/productService.php';
 
 //Get All Product
 $app->get('/api/products', function ($request, $response, $args) {
@@ -61,8 +59,8 @@ $app->post('/api/products/add', function ($request, $response, $args) {
     $visibility     = $request->getParam('visibility');
     $date           = $request->getParam('date');
 
-    $model = new ProductModel();
-    echo json_encode($model->Add($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
+    $service = new ProductService();
+    echo json_encode($service->InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 $app->post('/api/products/addcate', function ($request, $response, $args) {
@@ -90,8 +88,8 @@ $app->put('/api/products/update/{id}', function ($request, $response, $args) {
     $visibility     = $request->getParam('visibility');
     $date           = $request->getParam('date');
 
-    $model = new ProductModel();
-    echo json_encode($model->Update($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
+    $service = new ProductService();
+    echo json_encode($service->UpdateProduct($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -100,8 +98,8 @@ $app->delete('/api/products/delete/{id}', function ($request, $response, $args) 
 
     $id = $request->getAttribute('id');
 
-    $model = new ProductModel();
-    echo json_encode($model->Delete($id));
+    $service = new ProductService();
+    echo json_encode($service->Delete($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 

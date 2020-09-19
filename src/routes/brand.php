@@ -4,6 +4,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 // require '../vendor/autoload.php';
 require '../src/models/brandModel.php';
+require '../src/services/brandService.php';
 // $app = new \Slim\App;
 
 
