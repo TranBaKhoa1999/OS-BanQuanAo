@@ -17,8 +17,22 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        public function GetSingle($id){
-            $sql = "SELECT * FROM product_cate WHERE id = $id";
+        public function GetIdProductsByCate($id){
+            $sql = "SELECT id_product FROM product_cate WHERE id_Category = $id";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->rowcount() > 0){
+                $product_cate = $data->fetchAll(PDO::FETCH_OBJ);
+                return $product_cate;
+            }
+            else{
+                return (
+                    array('message'=>'not found')
+                );
+            }
+        }
+        public function GetIdCatesByProduct($id){
+            $sql = "SELECT id_category FROM product_cate WHERE id_Product = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -32,62 +46,33 @@ require_once "../src/config/db.php";
             }
         }
         // --------------------------------------------------------------- ADD ---------------------------------------------
-        public function Add($name,$logo,$description){
-            $sql = "INSERT INTO product_cate(name,logo,description) VALUE(:name,:logo,:description)";
+        public function Add($id_cate,$id_product){
+            
+            $sql = "INSERT INTO product_cate(id_category,id_product) VALUE(:id_cate,:id_product)";
 
             $data = $this->runQuery($sql);
-            $data->bindParam(':name',$name);
-            $data->bindParam(':logo',$logo);
-            $data->bindParam(':description',$description);
+            $data->bindParam(':id_cate',$id_cate);
+            $data->bindParam(':id_product',$id_product);
 
             if($data->execute()){
-                return (
+                return(
                     array('message'=>'add success!')
                 );
             }
             else{
-                return (
+                return(
                     array('message'=>'add fail!')
                 );
             }
         }
-        // --------------------------------------------------------------- UPDATE ---------------------------------------------
-        public function Update($id,$name,$logo,$description){
-            $sql = "UPDATE product_cate SET name =:name, logo =:logo, description = :description WHERE id = $id";
-            $data = $this->runQuery($sql);
-            $data->bindParam(':name',$name);
-            $data->bindParam(':logo',$logo);
-            $data->bindParam(':description',$description);
+        // -------------------------------------------------------------- UPDATE ---------------------------------
+        public function Update($id_cate,$id_product){
 
-            $data->execute();
-            if($data->execute()){
-                return (
-                    array('message'=>'update success!')
-                );
-            }
-            else{
-                return (
-                    array('message'=>'update fail!')
-                );
-            }
         }
-        // --------------------------------------------------------------- DELETE ---------------------------------------------
-        public function Delete($id){
-            $sql = "DELETE FROM product_cate WHERE id = $id";
-            $data = $this->runQuery($sql);
-            $data->execute();
-            if($data->execute()){
-                return(
-                    array('message'=>'delete success!')
-                );
-            }
-            else{
-                return(
-                    array('message'=>'delete fail!')
-                );
-            }
-        }
+        // -------------------------------------------------------------- DELETE--------------------------------
+        public function Delete($id_cate,$id_product){
 
+        }
     }
 
 ?>

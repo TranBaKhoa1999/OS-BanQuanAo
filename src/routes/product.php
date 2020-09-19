@@ -3,25 +3,33 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 // require '../vendor/autoload.php';
-require '../src/models/productModel.php';
+// require '../src/models/productModel.php';
+require '../src/services/productService.php';
 // $app = new \Slim\App;
 
 
 //Get All Product
 $app->get('/api/products', function ($request, $response, $args) {
-    $model = new ProductModel();
-    echo json_encode($model->GetAll());
+    $service = new ProductService();
+    echo json_encode($service->GetAllProducts());
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 //Get Single Product
 $app->get('/api/products/{id}', function ($request, $response, $args) {
     $id = $request->getAttribute('id');
-    $model = new ProductModel();
-    echo json_encode($model->GetSingle($id));
+    $service = new ProductService();
+    echo json_encode($service->GetSingleProduct($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
+// get all Products by category
+$app->get('/api/products/cate/{id_Cate}', function ($request, $response, $args) {
+    $id = $request->getAttribute('id_Cate');
+    $service = new ProductService();
+    echo json_encode($service->GetAllProductsByCate($id));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 //sort
 // $app->get('/api/products/sort/cate={id}&type={type}', function ($request, $response, $args) {
 //     $idCate = $request->getAttribute('id');
@@ -55,6 +63,16 @@ $app->post('/api/products/add', function ($request, $response, $args) {
 
     $model = new ProductModel();
     echo json_encode($model->Add($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
+$app->post('/api/products/addcate', function ($request, $response, $args) {
+
+    $id_cate           = $request->getParam('id_Category');
+    $id_product          = $request->getParam('id_Product');
+
+
+    $service = new ProductService();
+    echo json_encode($service->InsertProduct_cate($id_cate,$id_product));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 //update product
