@@ -22,6 +22,7 @@ $app->get('/api/brands/{id}', function ($request, $response, $args) {
     echo json_encode($model->GetSingle($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
+
 //add brand
 $app->post('/api/brands/add', function ($request, $response, $args) {
     $name           = $request->getParam('name');
@@ -47,13 +48,13 @@ $app->put('/api/brands/update/{id}', function ($request, $response, $args) {
 });
 
 //delete brand
-$app->delete('/api/brands/delete/{id}', function ($request, $response, $args) {
+// $app->delete('/api/brands/delete/{id}', function ($request, $response, $args) {
 
-    $id = $request->getAttribute('id');
+//     $id = $request->getAttribute('id');
 
-    $model = new BrandModel();
-    echo json_encode($model->Delete($id));
-    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
-});
+//     $model = new BrandModel();
+//     echo json_encode($model->Delete($id));
+//     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+// });
 
 ?>

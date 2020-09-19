@@ -22,6 +22,7 @@ $app->get('/api/categories/{id}', function ($request, $response, $args) {
     echo json_encode($model->GetSingle($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
+
 //get categories by brand
 // $app->get('/api/categories/brand/{id}', function ($request, $response, $args) {
 //     $id = $request->getAttribute('id');

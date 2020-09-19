@@ -17,6 +17,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         public function GetIdProductsByCate($id){
             $sql = "SELECT id_product FROM product_cate WHERE id_Category = $id";
             $data = $this->runQuery($sql);
@@ -31,6 +32,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         public function GetIdCatesByProduct($id){
             $sql = "SELECT id_category FROM product_cate WHERE id_Product = $id";
             $data = $this->runQuery($sql);
@@ -45,8 +47,9 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         // --------------------------------------------------------------- ADD ---------------------------------------------
-        public function Add($id_cate,$id_product){
+        public function Add($id_cate, $id_product){
             
             $sql = "INSERT INTO product_cate(id_category,id_product) VALUE(:id_cate,:id_product)";
 
@@ -65,13 +68,46 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        // -------------------------------------------------------------- UPDATE ---------------------------------
-        public function Update($id_cate,$id_product){
 
-        }
+        // // -------------------------------------------------------------- UPDATE ---------------------------------
+        // public function Update($id_cate,$id_product){
+
+        // }
+
         // -------------------------------------------------------------- DELETE--------------------------------
-        public function Delete($id_cate,$id_product){
+        public function DeleteCategoryOfProduct($id_product){
+            $sql = "DELETE FROM product_cate WHERE id_Product = $id_product";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->execute()){
+                return(
+                    array('message'=>'delete success!')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'delete fail!')
+                );
+            }
+        }
 
+
+
+        // category Service
+        public function DeleteAllProductOfCategory($id_cate){
+            $sql = "DELETE FROM product_cate WHERE id_Category = $id_cate";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->execute()){
+                return(
+                    array('message'=>'delete success!')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'delete fail!')
+                );
+            }
         }
     }
 

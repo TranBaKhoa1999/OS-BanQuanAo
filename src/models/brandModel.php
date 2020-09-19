@@ -17,6 +17,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         public function GetSingle($id){
             $sql = "SELECT * FROM brand WHERE id = $id";
             $data = $this->runQuery($sql);
@@ -31,6 +32,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+
         public function Add($name,$logo,$description){
             $sql = "INSERT INTO brand(name,logo,description) VALUE(:name,:logo,:description)";
 
@@ -70,21 +72,22 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        public function Delete($id){
-            $sql = "DELETE FROM brand WHERE id = $id";
-            $data = $this->runQuery($sql);
-            $data->execute();
-            if($data->execute()){
-                return(
-                    array('message'=>'delete success!')
-                );
-            }
-            else{
-                return(
-                    array('message'=>'delete fail!')
-                );
-            }
-        }
+
+        // public function Delete($id){
+        //     $sql = "DELETE FROM brand WHERE id = $id";
+        //     $data = $this->runQuery($sql);
+        //     $data->execute();
+        //     if($data->execute()){
+        //         return(
+        //             array('message'=>'delete success!')
+        //         );
+        //     }
+        //     else{
+        //         return(
+        //             array('message'=>'delete fail!')
+        //         );
+        //     }
+        // }
 
     }
 

@@ -22,8 +22,30 @@ require_once "../src/models/brandModel.php";
             $this->attributeModel = new AttributeModel();
             $this->brandModel = new BrandModel();
         }
-        public function GetAllBrands(){
+
+        public function GetAllCategory(){
             return $this->categoryModel->GetAll();
+        }
+
+        public function GetSingleCategory($id){
+            return $this->categoryModel->GetSingle($id);
+        }
+
+        public function InsertCategory($name, $image, $description, $parentCategory, $count){
+            return $this->categoryModel->Add($name, $image, $description, $parentCategory, $count);
+        }
+
+        public function UpdateCategory($id, $name, $image, $description, $parentCategory){
+            return $this->categoryModel->Update($id, $name, $image, $description, $parentCategory);
+        }
+
+        public function UpdateCountCategory($id, $count){
+            return $this->categoryModel->UpdateCount($id, $count);
+        }
+
+        public function DeleteCategory($id){
+            $this->product_cateModel->DeleteAllProductOfCategory($id);
+            return $this->categoryModel->Delete($id);
         }
 
     }
