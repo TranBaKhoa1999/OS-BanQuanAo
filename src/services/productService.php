@@ -95,8 +95,24 @@ require_once "../src/models/brandModel.php";
         }
 
         // add Product
-        public function InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date){
-            return $this->productModel->Add($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date);
+        public function InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate){
+
+            if($this->productModel->Add($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date)){ // nếu add sản phẩm thành công tiến hành add cate
+                $listCate = explode('/', $cate); // tách chuỗi - xóa đưa vào mảng
+                $id = $this->productModel->GetLastId();
+                for($i = 0; $i<count($listCate);$i++){
+                    $this->product_cateModel->Add($listCate[$i],$id[0]->id);
+                }
+                return (
+                    array('message'=>'Insert Success')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'Insert Fail!')
+                );
+            }
+
         }
         // Add Product _ cate
         public function InsertProduct_cate($id_cate,$id_product){

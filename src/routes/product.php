@@ -58,9 +58,10 @@ $app->post('/api/products/add', function ($request, $response, $args) {
     $description    = $request->getParam('description');
     $visibility     = $request->getParam('visibility');
     $date           = $request->getParam('date');
+    $cate           = $request->getParam('cate');
 
     $service = new ProductService();
-    echo json_encode($service->InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
+    echo json_encode($service->InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 $app->post('/api/products/addcate', function ($request, $response, $args) {

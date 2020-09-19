@@ -32,7 +32,20 @@ require_once "../src/config/db.php";
                 );
             }
         }
-
+        public function GetLastId(){
+            $sql = "SELECT MAX(id) id from product";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->rowcount() > 0){
+                $id = $data->fetchAll(PDO::FETCH_OBJ);
+                return($id);
+            }
+            else{
+                return(
+                    array('message'=>'not found')
+                );
+            }
+        }
 
         //sort by cate
         public function SortByCate($idCate){
