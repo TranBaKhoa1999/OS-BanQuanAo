@@ -14,9 +14,7 @@ require_once "../src/config/db.php";
                 return($products);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
         public function GetSingle($id){
@@ -102,9 +100,7 @@ require_once "../src/config/db.php";
                 return($product);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
         // ------------------------------------------------------------- ADD ------------------------------------------------
@@ -125,14 +121,10 @@ require_once "../src/config/db.php";
             $data->bindParam(':date',$date);
 
             if($data->execute()){
-                return(
-                    array('message'=>'add success!')
-                );
+                return true;
             }
             else{
-                return(
-                    array('message'=>'add fail!')
-                );
+                return false;
             }
         }
         // -------------------------------------------------------------UPDATE----------------------------------------------
@@ -154,14 +146,10 @@ require_once "../src/config/db.php";
 
             $data->execute();
             if($data->execute()){
-                return (
-                    array('message'=>'update success!')
-                );
+                return true;
             }
             else{
-                return (
-                    array('message'=>'update fail!')
-                );
+                return false;
             }
         }
         public function ChangeVisibility($id,$value){ //"hiden","publish","delete"
@@ -170,14 +158,10 @@ require_once "../src/config/db.php";
             $data->bindParam(':visibility',$value);
             $data->execute();
             if($data->execute()){
-                return (
-                    array('message'=>'Change visibility success!')
-                );
+                return true;
             }
             else{
-                return (
-                    array('message'=>'Change visibility fail!')
-                );
+                return false;
             }
         }
         // -------------------------------------------------------------DELETE----------------------------------------------

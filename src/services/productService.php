@@ -102,7 +102,6 @@ require_once "../src/models/brandModel.php";
         // get product by cate
         public function GetAllProductsByCate($id_cate){
             if($this->product_cateModel->GetIdProductsByCate($id_cate) ){
-                echo $this->product_cateModel->GetIdProductsByCate($id_cate);
                 $listIdProduct =  $this->product_cateModel->GetIdProductsByCate($id_cate);
 
                 $listProduct = array();
@@ -158,8 +157,6 @@ require_once "../src/models/brandModel.php";
                 $color="null";
                 $brandShow = "null";
                 foreach($listProduct as $product){
-                    echo $product->Brand;
-
                     if($product->Attribute != null){
                         $attribute = $this->attributeModel->GetSingle($product->Attribute);
 
@@ -183,7 +180,9 @@ require_once "../src/models/brandModel.php";
                         'Sale Price'=>$product->Sale_Price,
                         'Description' =>$product->Description,
                         'Visibility' =>$product->Visibility,
-                        'Date' =>$product->Date
+                        'Date' =>$product->Date,
+                        'Id Attribute' =>$product->Attribute,
+                        'Id Brand' =>$product->Brand
         
                     ];
                     array_push($listShow,$sum);
