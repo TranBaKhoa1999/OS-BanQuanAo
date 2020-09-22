@@ -6,7 +6,8 @@ require_once "../src/config/db.php";
         
         // ------------------------------------------------------------- GET -------------------------------------------
         public function GetAll(){
-            $data = $this->runQuery('select * from product');
+            $sql = "SELECT * FROM product WHERE visibility !='Publish'";
+            $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
                 $products = $data->fetchAll(PDO::FETCH_OBJ);
@@ -32,8 +33,21 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        public function GetAllProductsByBrand($id_Brand){
+            $data = $this->runQuery("SELECT * FROM product WHERE brand = $id_Brand AND visibility !='Publish'");
+            $data->execute();
+            if($data->rowcount() > 0){
+                $products = $data->fetchAll(PDO::FETCH_OBJ);
+                return($products);
+            }
+            else{
+                return(
+                    array('message'=>'not found')
+                );
+            }
+        }
         public function GetLastId(){
-            $sql = "SELECT MAX(id) id from product";
+            $sql = "SELECT MAX(id) id FROM product";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -157,6 +171,22 @@ require_once "../src/config/db.php";
             else{
                 return (
                     array('message'=>'update fail!')
+                );
+            }
+        }
+        public function ChangeVisibility($id,$value){ //"hiden","publish","delete"
+            $sql = "UPDATE product SET visibility =:visibility WHERE id= $id ";
+            $data = $this->runQuery($sql);
+            $data->bindParam(':visibility',$value);
+            $data->execute();
+            if($data->execute()){
+                return (
+                    array('message'=>'Change visibility success!')
+                );
+            }
+            else{
+                return (
+                    array('message'=>'Change visibility fail!')
                 );
             }
         }

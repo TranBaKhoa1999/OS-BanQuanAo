@@ -24,7 +24,42 @@ require_once "../src/models/brandModel.php";
         }
 
         public function GetAllProducts(){
-            return $this->productModel->GetAll();
+            $listProduct =  $this->productModel->GetAll();
+            $listShow = array();
+            $size="null";
+            $color="null";
+            $brandShow = "null";
+            foreach($listProduct as $product){
+                if($product->Attribute != null){
+                    $attribute = $this->attributeModel->GetSingle($product->Attribute);
+
+                    $size = $attribute[0]->Size;
+                    $color = $attribute[0]->Color;
+
+                 }
+                if($product->Brand !=null ){
+                    $brand = $this->brandModel->GetSingle($product->Brand);
+                    $brandShow=$brand[0]->Name;
+                }
+                $sum= [
+                    'Id'    => $product->Id,
+                    'Name'  => $product->Name,
+                    'Image' => $product->Image,
+                    'Brand' => $brandShow,
+                    'SKU'   => $product->SKU,
+                    'Size'  => $size,
+                    'Color' => $color,
+                    'Price' => $product->Price,
+                    'Sale Price'=>$product->Sale_Price,
+                    'Description' =>$product->Description,
+                    'Visibility' =>$product->Visibility,
+                    'Date' =>$product->Date,
+                    'Id Attribute' =>$product->Attribute,
+                    'Id Brand' =>$product->Brand
+                ];
+                array_push($listShow,$sum);
+            }
+            return $listShow;
         }
         public function GetSingleProduct($id){
             $product =  $this->productModel->GetSingle($id);
@@ -48,7 +83,9 @@ require_once "../src/models/brandModel.php";
                 'Sale Price'=>$product[0]->Sale_Price,
                 'Description' =>$product[0]->Description,
                 'Visibility' =>$product[0]->Visibility,
-                'Date' =>$product[0]->Date
+                'Date' =>$product[0]->Date,
+                'Id Attribute' =>$product[0]->Attribute,
+                'Id Brand' =>$product[0]->Brand
 
             ];
             return $sum;
@@ -86,22 +123,69 @@ require_once "../src/models/brandModel.php";
                     'Sale Price'=>$product[0]->Sale_Price,
                     'Description' =>$product[0]->Description,
                     'Visibility' =>$product[0]->Visibility,
-                    'Date' =>$product[0]->Date
+                    'Date' =>$product[0]->Date,
+                    'Id Attribute' =>$product[0]->Attribute,
+                    'Id Brand' =>$product[0]->Brand
 
                 ];
                 array_push($listProduct,$sum);
             }
             return $listProduct;
         }
+        // get product by brand
+        public function GetAllProductsByBrand($id_Brand){
+
+            $listProduct =  $this->productModel->GetAllProductsByBrand($id_Brand);
+            $listShow = array();
+            $size="null";
+            $color="null";
+            $brandShow = "null";
+            foreach($listProduct as $product){
+                echo $product->Brand;
+
+                if($product->Attribute != null){
+                    $attribute = $this->attributeModel->GetSingle($product->Attribute);
+
+                    $size = $attribute[0]->Size;
+                    $color = $attribute[0]->Color;
+
+                 }
+                if($product->Brand !=null ){
+                    $brand = $this->brandModel->GetSingle($product->Brand);
+                    $brandShow=$brand[0]->Name;
+                }
+                $sum= [
+                    'Id'    => $product->Id,
+                    'Name'  => $product->Name,
+                    'Image' => $product->Image,
+                    'Brand' => $brandShow,
+                    'SKU'   => $product->SKU,
+                    'Size'  => $size,
+                    'Color' => $color,
+                    'Price' => $product->Price,
+                    'Sale Price'=>$product->Sale_Price,
+                    'Description' =>$product->Description,
+                    'Visibility' =>$product->Visibility,
+                    'Date' =>$product->Date
+    
+                ];
+                array_push($listShow,$sum);
+            }
+            return $listShow;
+        }
 
         // add Product
         public function InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate){
 
-            if($this->productModel->Add($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date)){ // nếu add sản phẩm thành công tiến hành add cate
+            if( $this->productModel->Add($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date) ){ // nếu add sản phẩm thành công tiến hành add cate
+
                 $listCate = explode('/', $cate); // tách chuỗi - xóa đưa vào mảng
                 $id = $this->productModel->GetLastId();
+                
+                $this->product_cateModel->DeleteCategoryOfProduct($id[0]->id); // xóa hết các Cate cũ của product
+
                 for($i = 0; $i<count($listCate);$i++){
-                    $this->product_cateModel->Add($listCate[$i],$id[0]->id);
+                    $this->product_cateModel->Add($listCate[$i],$id[0]->id); // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
                 }
                 return (
                     array('message'=>'Insert Success')
@@ -112,7 +196,6 @@ require_once "../src/models/brandModel.php";
                     array('message'=>'Insert Fail!')
                 );
             }
-
         }
         // Add Product _ cate
         public function InsertProduct_cate($id_cate,$id_product){
@@ -120,8 +203,29 @@ require_once "../src/models/brandModel.php";
         }
 
         // update product
-        public function UpdateProduct($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date){
-            return $this->productModel->Update($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date);
+        public function UpdateProduct($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate){
+            
+            if($this->productModel->Update($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date) ){
+
+                $listCate = explode('/', $cate); // tách chuỗi - xóa đưa vào mảng
+                $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa hết các Cate cũ của product
+
+                for($i = 0; $i<count($listCate);$i++){
+                    $this->product_cateModel->Add($listCate[$i],$id); // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
+                }
+                return (
+                    array('message'=>'Update Success')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'Update Fail!')
+                );
+            }
+        }
+        // delete product
+        public function DeleteProduct($id){ // change visibility => 'xoa'
+            return $this->productModel->ChangeVisibility($id,"Delete");
         }
     }
 

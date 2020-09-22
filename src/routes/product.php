@@ -28,6 +28,13 @@ $app->get('/api/products/cate/{id_Cate}', function ($request, $response, $args) 
     echo json_encode($service->GetAllProductsByCate($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
+// get all products by brand
+$app->get('/api/products/brand/{id_Brand}', function ($request, $response, $args) {
+    $id = $request->getAttribute('id_Brand');
+    $service = new ProductService();
+    echo json_encode($service->GetAllProductsByBrand($id));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 //sort
 // $app->get('/api/products/sort/cate={id}&type={type}', function ($request, $response, $args) {
 //     $idCate = $request->getAttribute('id');
@@ -62,8 +69,10 @@ $app->post('/api/products/add', function ($request, $response, $args) {
 
     $service = new ProductService();
     echo json_encode($service->InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate));
-    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+    // return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
+
+ // hàm insert product_cate  -  chỉ để test vì khi insert product đã gọi hàm này r. -*********************************************************
 $app->post('/api/products/addcate', function ($request, $response, $args) {
 
     $id_cate           = $request->getParam('id_Category');
@@ -74,10 +83,11 @@ $app->post('/api/products/addcate', function ($request, $response, $args) {
     echo json_encode($service->InsertProduct_cate($id_cate,$id_product));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
+
 //update product
 $app->put('/api/products/update/{id}', function ($request, $response, $args) {
 
-    $id     = $request->getAttribute('id');
+    $id             = $request->getAttribute('id');
     $name           = $request->getParam('name');
     $image          = $request->getParam('image');
     $brand          = $request->getParam('brand');
@@ -88,9 +98,10 @@ $app->put('/api/products/update/{id}', function ($request, $response, $args) {
     $description    = $request->getParam('description');
     $visibility     = $request->getParam('visibility');
     $date           = $request->getParam('date');
+    $cate           = $request->getParam('cate');
 
     $service = new ProductService();
-    echo json_encode($service->UpdateProduct($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date));
+    echo json_encode($service->UpdateProduct($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -100,7 +111,7 @@ $app->delete('/api/products/delete/{id}', function ($request, $response, $args) 
     $id = $request->getAttribute('id');
 
     $service = new ProductService();
-    echo json_encode($service->Delete($id));
+    echo json_encode($service->DeleteProduct($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
