@@ -62,55 +62,17 @@ require_once "../src/models/brandModel.php";
             return $listShow;
         }
         public function GetSingleProduct($id){
-            $product =  $this->productModel->GetSingle($id);
-            //get properties
-            if($product[0]->Attribute != null){
-                $attribute = $this->attributeModel->GetSingle($product[0]->Attribute);
-             }
-            if($product[0]->Brand !=null ){
-                $brandName = $this->brandModel->GetSingle($product[0]->Brand);
-            }
-            //
-            $sum= [
-                'Id'    => $product[0]->Id,
-                'Name'  => $product[0]->Name,
-                'Image' => $product[0]->Image,
-                'Brand' => $brandName[0]->Name,
-                'SKU'   => $product[0]->SKU,
-                'Size'  => $attribute[0]->Size,
-                'Color' => $attribute[0]->Color,
-                'Price' => $product[0]->Price,
-                'Sale Price'=>$product[0]->Sale_Price,
-                'Description' =>$product[0]->Description,
-                'Visibility' =>$product[0]->Visibility,
-                'Date' =>$product[0]->Date,
-                'Id Attribute' =>$product[0]->Attribute,
-                'Id Brand' =>$product[0]->Brand
+            if($this->productModel->GetSingle($id)){
 
-            ];
-            return $sum;
-
-        }
-        // get product by cate
-        public function GetAllProductsByCate($id_cate){
-            $listIdProduct =  $this->product_cateModel->GetIdProductsByCate($id_cate);
-            
-            $listProduct = array();
-            foreach($listIdProduct as $key){
-                if($key->id_product == null){
-                    return $listIdProduct;
-                }
-                $id = $key->id_product;
-                $product = $this->productModel->GetSingle($id);
-
-                 // get properties of product
+                $product =  $this->productModel->GetSingle($id);
+                //get properties
                 if($product[0]->Attribute != null){
                     $attribute = $this->attributeModel->GetSingle($product[0]->Attribute);
-                 }
+                }
                 if($product[0]->Brand !=null ){
                     $brandName = $this->brandModel->GetSingle($product[0]->Brand);
                 }
-                // end get properties
+                //
                 $sum= [
                     'Id'    => $product[0]->Id,
                     'Name'  => $product[0]->Name,
@@ -128,50 +90,112 @@ require_once "../src/models/brandModel.php";
                     'Id Brand' =>$product[0]->Brand
 
                 ];
-                array_push($listProduct,$sum);
+                return $sum;
             }
-            return $listProduct;
+            else{
+                return (
+                    array('message'=>'not found')
+                );
+            }
+        
+        }
+        // get product by cate
+        public function GetAllProductsByCate($id_cate){
+            if($this->product_cateModel->GetIdProductsByCate($id_cate) ){
+                echo $this->product_cateModel->GetIdProductsByCate($id_cate);
+                $listIdProduct =  $this->product_cateModel->GetIdProductsByCate($id_cate);
+
+                $listProduct = array();
+                foreach($listIdProduct as $key){
+                    if($key->id_product == null){
+                        return $listIdProduct;
+                    }
+                    $id = $key->id_product;
+                    $product = $this->productModel->GetSingle($id);
+
+                    // get properties of product
+                    if($product[0]->Attribute != null){
+                        $attribute = $this->attributeModel->GetSingle($product[0]->Attribute);
+                    }
+                    if($product[0]->Brand !=null ){
+                        $brandName = $this->brandModel->GetSingle($product[0]->Brand);
+                    }
+                    // end get properties
+                    $sum= [
+                        'Id'    => $product[0]->Id,
+                        'Name'  => $product[0]->Name,
+                        'Image' => $product[0]->Image,
+                        'Brand' => $brandName[0]->Name,
+                        'SKU'   => $product[0]->SKU,
+                        'Size'  => $attribute[0]->Size,
+                        'Color' => $attribute[0]->Color,
+                        'Price' => $product[0]->Price,
+                        'Sale Price'=>$product[0]->Sale_Price,
+                        'Description' =>$product[0]->Description,
+                        'Visibility' =>$product[0]->Visibility,
+                        'Date' =>$product[0]->Date,
+                        'Id Attribute' =>$product[0]->Attribute,
+                        'Id Brand' =>$product[0]->Brand
+
+                    ];
+                    array_push($listProduct,$sum);
+                }
+                // return $listProduct;
+            }
+            else{
+                return (
+                    array('message'=>'not found')
+                );
+            }
+            
         }
         // get product by brand
         public function GetAllProductsByBrand($id_Brand){
+            if($this->productModel->GetAllProductsByBrand($id_Brand)){
+                $listProduct =  $this->productModel->GetAllProductsByBrand($id_Brand);
+                $listShow = array();
+                $size="null";
+                $color="null";
+                $brandShow = "null";
+                foreach($listProduct as $product){
+                    echo $product->Brand;
 
-            $listProduct =  $this->productModel->GetAllProductsByBrand($id_Brand);
-            $listShow = array();
-            $size="null";
-            $color="null";
-            $brandShow = "null";
-            foreach($listProduct as $product){
-                echo $product->Brand;
+                    if($product->Attribute != null){
+                        $attribute = $this->attributeModel->GetSingle($product->Attribute);
 
-                if($product->Attribute != null){
-                    $attribute = $this->attributeModel->GetSingle($product->Attribute);
+                        $size = $attribute[0]->Size;
+                        $color = $attribute[0]->Color;
 
-                    $size = $attribute[0]->Size;
-                    $color = $attribute[0]->Color;
-
-                 }
-                if($product->Brand !=null ){
-                    $brand = $this->brandModel->GetSingle($product->Brand);
-                    $brandShow=$brand[0]->Name;
+                    }
+                    if($product->Brand !=null ){
+                        $brand = $this->brandModel->GetSingle($product->Brand);
+                        $brandShow=$brand[0]->Name;
+                    }
+                    $sum= [
+                        'Id'    => $product->Id,
+                        'Name'  => $product->Name,
+                        'Image' => $product->Image,
+                        'Brand' => $brandShow,
+                        'SKU'   => $product->SKU,
+                        'Size'  => $size,
+                        'Color' => $color,
+                        'Price' => $product->Price,
+                        'Sale Price'=>$product->Sale_Price,
+                        'Description' =>$product->Description,
+                        'Visibility' =>$product->Visibility,
+                        'Date' =>$product->Date
+        
+                    ];
+                    array_push($listShow,$sum);
                 }
-                $sum= [
-                    'Id'    => $product->Id,
-                    'Name'  => $product->Name,
-                    'Image' => $product->Image,
-                    'Brand' => $brandShow,
-                    'SKU'   => $product->SKU,
-                    'Size'  => $size,
-                    'Color' => $color,
-                    'Price' => $product->Price,
-                    'Sale Price'=>$product->Sale_Price,
-                    'Description' =>$product->Description,
-                    'Visibility' =>$product->Visibility,
-                    'Date' =>$product->Date
-    
-                ];
-                array_push($listShow,$sum);
+                return $listShow;
             }
-            return $listShow;
+            else{
+                return (
+                    array('message'=>'not found')
+                );
+            }
+            
         }
 
         // add Product
@@ -181,8 +205,6 @@ require_once "../src/models/brandModel.php";
 
                 $listCate = explode('/', $cate); // tách chuỗi - xóa đưa vào mảng
                 $id = $this->productModel->GetLastId();
-                
-                $this->product_cateModel->DeleteCategoryOfProduct($id[0]->id); // xóa hết các Cate cũ của product
 
                 for($i = 0; $i<count($listCate);$i++){
                     $this->product_cateModel->Add($listCate[$i],$id[0]->id); // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
@@ -246,6 +268,8 @@ require_once "../src/models/brandModel.php";
         public function DeleteProduct($id){ // change visibility => 'xoa'
             if($this->productModel->ChangeVisibility($id,"Delete")){
                 
+                $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa bảng liên quan ( produt_cate);
+
                 $listCate = $this->product_cateModel->GetIdCatesByProduct($id); // lấy ra danh sách cate của product
 
                 foreach($listCate as $cate){

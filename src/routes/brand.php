@@ -3,23 +3,22 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 // require '../vendor/autoload.php';
-require '../src/models/brandModel.php';
 require '../src/services/brandService.php';
 // $app = new \Slim\App;
 
 
 //Get All brand
 $app->get('/api/brands', function ($request, $response, $args) {
-    $model = new BrandModel();
-    echo json_encode($model->GetAll());
+    $service = new BrandService();
+    echo json_encode($service->GetAllBrands());
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 //Get Single brand
 $app->get('/api/brands/{id}', function ($request, $response, $args) {
     $id = $request->getAttribute('id');
-    $model = new BrandModel();
-    echo json_encode($model->GetSingle($id));
+    $service = new BrandService();
+    echo json_encode($service->GetSingleBrand($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -29,8 +28,8 @@ $app->post('/api/brands/add', function ($request, $response, $args) {
     $logo           = $request->getParam('logo');
     $description    = $request->getParam('description');
     
-    $model = new BrandModel();
-    echo json_encode($model->Add($name,$logo,$description));
+    $service = new BrandService();
+    echo json_encode($service->InsertBrand($name,$logo,$description));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -42,8 +41,8 @@ $app->put('/api/brands/update/{id}', function ($request, $response, $args) {
     $logo   = $request->getParam('logo');
     $description = $request->getParam('description');
 
-    $model = new BrandModel();
-    echo json_encode($model->Update($id,$name,$logo,$description));
+    $service = new BrandService();
+    echo json_encode($service->UpdateBrand($id,$name,$logo,$description));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -52,8 +51,8 @@ $app->put('/api/brands/update/{id}', function ($request, $response, $args) {
 
 //     $id = $request->getAttribute('id');
 
-//     $model = new BrandModel();
-//     echo json_encode($model->Delete($id));
+//     $service = new BrandService();
+//     echo json_encode($service->Delete($id));
 //     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 // });
 

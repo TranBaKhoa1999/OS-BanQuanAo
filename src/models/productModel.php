@@ -28,22 +28,18 @@ require_once "../src/config/db.php";
                 return($product);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
         public function GetAllProductsByBrand($id_Brand){
-            $data = $this->runQuery("SELECT * FROM product WHERE brand = $id_Brand AND visibility !='Delete'");
+            $data = $this->runQuery("SELECT * FROM product WHERE brand = $id_Brand AND visibility !='Delete' ");
             $data->execute();
             if($data->rowcount() > 0){
                 $products = $data->fetchAll(PDO::FETCH_OBJ);
                 return($products);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
         public function GetLastId(){
@@ -55,9 +51,7 @@ require_once "../src/config/db.php";
                 return($id);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
 
@@ -71,9 +65,7 @@ require_once "../src/config/db.php";
                 return($product);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
         //sort by cost
@@ -92,9 +84,7 @@ require_once "../src/config/db.php";
                 return($product);
             }
             else{
-                return(
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
         //sort by cost and cate

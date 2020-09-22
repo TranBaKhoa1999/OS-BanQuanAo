@@ -25,15 +25,15 @@ require_once "../src/models/brandModel.php";
             return $this->brandModel->GetAll();
         }
 
-        public function GetSingleBrands($id){
+        public function GetSingleBrand($id){
             return $this->brandModel->GetSingle($id);
         }
 
-        public function InsertBrands($name, $logo, $description){
+        public function InsertBrand($name, $logo, $description){
             return $this->brandModel->Add($name, $logo, $description);
         }
 
-        public function UpdateBrands($id, $name, $logo, $description){
+        public function UpdateBrand($id, $name, $logo, $description){
             return $this->brandModel->Update($id, $name, $logo, $description);
         }
 

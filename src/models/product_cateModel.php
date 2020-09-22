@@ -23,8 +23,8 @@ require_once "../src/config/db.php";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
-                $product_cate = $data->fetchAll(PDO::FETCH_OBJ);
-                return $product_cate;
+                $id_product = $data->fetchAll(PDO::FETCH_OBJ);
+                return $data->rowCount();
             }
             else{
                 return (

@@ -3,33 +3,25 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 // require '../vendor/autoload.php';
-require '../src/models/categoryModel.php';
 require '../src/services/categoryService.php';
 // $app = new \Slim\App;
 
 
 //Get All Categories
 $app->get('/api/categories', function ($request, $response, $args) {
-    $model = new CategoryModel();
-    echo json_encode($model->GetAll());
+    $service = new CategoryService();
+    echo json_encode($service->GetAllCategory());
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 //Get Single Category
 $app->get('/api/categories/{id}', function ($request, $response, $args) {
     $id = $request->getAttribute('id');
-    $model = new CategoryModel();
-    echo json_encode($model->GetSingle($id));
+    $service = new CategoryService();
+    echo json_encode($service->GetSingleCategory($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
-//get categories by brand
-// $app->get('/api/categories/brand/{id}', function ($request, $response, $args) {
-//     $id = $request->getAttribute('id');
-//     $model = new CategoryModel();
-//     echo json_encode($model->GetCategoriesByBrand($id));
-//     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
-// });
 
 //add category
 $app->post('/api/categories/add', function ($request, $response, $args) {
@@ -40,8 +32,8 @@ $app->post('/api/categories/add', function ($request, $response, $args) {
     $brand          = $request->getParam('brand');
     $count          = $request->getParam('count');
 
-    $model          = new CategoryModel();
-    echo json_encode($model->Add($name,$image,$description,$parentCategory,$brand,$count));
+    $service          = new CategoryService();
+    echo json_encode($service->InsertCategory($name,$image,$description,$parentCategory,$brand,$count));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -55,8 +47,8 @@ $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
     $parentCategory = $request->getParam('parentcategory');
     $count          = $request->getParam('count');
 
-    $model = new CategoryModel();
-    echo json_encode($model->Update($id,$name,$image,$description,$parentCategory,$brand,$count));
+    $service = new CategoryService();
+    echo json_encode($service->UpdateCategory($id,$name,$image,$description,$parentCategory,$brand,$count));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -65,7 +57,7 @@ $app->delete('/api/categories/delete/{id}', function ($request, $response, $args
 
     $id = $request->getAttribute('id');
 
-    $model = new CategoryModel();
-    echo json_encode($model->Delete($id));
+    $service = new CategoryService();
+    echo json_encode($service->DeleteCategory($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
