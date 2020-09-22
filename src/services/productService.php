@@ -186,7 +186,11 @@ require_once "../src/models/brandModel.php";
 
                 for($i = 0; $i<count($listCate);$i++){
                     $this->product_cateModel->Add($listCate[$i],$id[0]->id); // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
+                    $thisCount = $this->categoryModel->GetSingle($listCate[$i]);
+                    $num = (int)($thisCount[0]->Count) + 1;
+                    $this->categoryModel->UpdateCount($listCate[$i],$num);
                 }
+
                 return (
                     array('message'=>'Insert Success')
                 );
@@ -208,10 +212,25 @@ require_once "../src/models/brandModel.php";
             if($this->productModel->Update($id,$name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date) ){
 
                 $listCate = explode('/', $cate); // tách chuỗi - xóa đưa vào mảng
+
                 $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa hết các Cate cũ của product
 
+                // Giảm số lượng Count của Cate cũ
+                $listProduct_Cate = $this->product_cateModel->GetIdCatesByProduct($id); // lấy ra danh sách cate của product
+
+                foreach($listProduct_Cate as $cate){
+                    $thisCount = $this->categoryModel->GetSingle($cate->id_category);
+                    $num = (int)($thisCount[0]->Count) - 1;
+                    $this->categoryModel->UpdateCount($cate->id_category,$num);
+                }
+
+                // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
                 for($i = 0; $i<count($listCate);$i++){
-                    $this->product_cateModel->Add($listCate[$i],$id); // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
+                    $this->product_cateModel->Add($listCate[$i],$id);
+                    // tăng số lượng cate mới
+                    $thisCount = $this->categoryModel->GetSingle($listCate[$i]);
+                    $num = (int)($thisCount[0]->Count) + 1;
+                    $this->categoryModel->UpdateCount($listCate[$i],$num); 
                 }
                 return (
                     array('message'=>'Update Success')
@@ -225,7 +244,25 @@ require_once "../src/models/brandModel.php";
         }
         // delete product
         public function DeleteProduct($id){ // change visibility => 'xoa'
-            return $this->productModel->ChangeVisibility($id,"Delete");
+            if($this->productModel->ChangeVisibility($id,"Delete")){
+                
+                $listCate = $this->product_cateModel->GetIdCatesByProduct($id); // lấy ra danh sách cate của product
+
+                foreach($listCate as $cate){
+                    $thisCount = $this->categoryModel->GetSingle($cate->id_category);
+                    $num = (int)($thisCount[0]->Count) - 1;
+                    $this->categoryModel->UpdateCount($cate->id_category,$num);
+                }
+                return (
+                    array('message'=>'Delete Success')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'Delete Fail!')
+                );
+            }
+
         }
     }
 

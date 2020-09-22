@@ -6,7 +6,7 @@ require_once "../src/config/db.php";
         
         // ------------------------------------------------------------- GET -------------------------------------------
         public function GetAll(){
-            $sql = "SELECT * FROM product WHERE visibility !='Publish'";
+            $sql = "SELECT * FROM product WHERE visibility !='Delete'";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -20,7 +20,7 @@ require_once "../src/config/db.php";
             }
         }
         public function GetSingle($id){
-            $sql = "SELECT * FROM product WHERE id = $id";
+            $sql = "SELECT * FROM product WHERE id = $id AND visibility !='Delete'";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -34,7 +34,7 @@ require_once "../src/config/db.php";
             }
         }
         public function GetAllProductsByBrand($id_Brand){
-            $data = $this->runQuery("SELECT * FROM product WHERE brand = $id_Brand AND visibility !='Publish'");
+            $data = $this->runQuery("SELECT * FROM product WHERE brand = $id_Brand AND visibility !='Delete'");
             $data->execute();
             if($data->rowcount() > 0){
                 $products = $data->fetchAll(PDO::FETCH_OBJ);
