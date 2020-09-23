@@ -14,5 +14,7 @@ require_once '../src/routes/brand.php';
 require_once '../src/routes/category.php';
 //route product
 require_once '../src/routes/product.php';
+//route storage
+require_once '../src/routes/storage.php';
 
 $app->run();

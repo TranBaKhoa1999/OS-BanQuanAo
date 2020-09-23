@@ -53,7 +53,7 @@ $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
 });
 
 // update count category
-$app->put('/api/categories/update/{id}', function ($request, $response, $args) {
+$app->put('/api/categories/update-count/{id}', function ($request, $response, $args) {
 
     $id = $request->getAttribute('id');
     $count = $request->getParam('count');
