@@ -24,36 +24,32 @@ $app->get('/api/customers/{email}', function ($request, $response, $args) {
 
 //add customer
 $app->post('/api/customers/add', function ($request, $response, $args) {
+    $email           = $request->getParam('email');
     $name           = $request->getParam('name');
-    $logo           = $request->getParam('logo');
-    $description    = $request->getParam('description');
+    $phone           = $request->getParam('phone');
+    $country           = $request->getParam('country');
+    $city           = $request->getParam('city');
+    $address           = $request->getParam('address');
     
     $service = new CustomerService();
-    echo json_encode($service->Insertcustomer($name,$logo,$description));
+    echo json_encode($service->Insertcustomer($email,$name,$phone,$country,$city,$address));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 // update customer
-$app->put('/api/customers/update/{id}', function ($request, $response, $args) {
-
-    $id     = $request->getAttribute('id');
-    $name   = $request->getParam('name');
-    $logo   = $request->getParam('logo');
-    $description = $request->getParam('description');
+$app->put('/api/customers/update/{email}', function ($request, $response, $args) {
+    $email = $request->getAttribute('email');
+    $name           = $request->getParam('name');
+    $phone           = $request->getParam('phone');
+    $country           = $request->getParam('country');
+    $city           = $request->getParam('city');
+    $address           = $request->getParam('address');
 
     $service = new CustomerService();
-    echo json_encode($service->Updatecustomer($id,$name,$logo,$description));
+    echo json_encode($service->Updatecustomer($email,$name,$phone,$country,$city,$address));
+    
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
-//delete customer
-// $app->delete('/api/customers/delete/{id}', function ($request, $response, $args) {
-
-//     $id = $request->getAttribute('id');
-
-//     $service = new CustomerService();
-//     echo json_encode($service->Delete($id));
-//     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
-// });
 
 ?>

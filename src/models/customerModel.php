@@ -59,7 +59,7 @@ require_once "../src/config/db.php";
         }
         
         public function Update($email, $name,$phone,$country,$city, $address){
-            $sql = "UPDATE customer SET name =:name, phone =:phone, country =:country, city =:city, address =:address WHERE email = $email";
+            $sql = "UPDATE customer SET name =:name, phone =:phone, country =:country, city =:city, address =:address WHERE email = '$email' ";
             $data = $this->runQuery($sql);
             $data->bindParam(':name',$name);
             $data->bindParam(':phone',$phone);

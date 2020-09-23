@@ -56,7 +56,6 @@ require_once "../src/config/db.php";
             $data->bindParam(':size',$size);
             $data->bindParam(':color',$color);
 
-            $data->execute();
             if($data->execute()){
                 return (
                     array('message'=>'update success!')
@@ -71,7 +70,7 @@ require_once "../src/config/db.php";
         public function Delete($id){
             $sql = "DELETE FROM attribute WHERE id = $id";
             $data = $this->runQuery($sql);
-            $data->execute();
+
             if($data->execute()){
                 return(
                     array('message'=>'delete success!')

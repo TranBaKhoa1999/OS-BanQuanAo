@@ -15,5 +15,4 @@ require_once '../src/routes/category.php';
 //route product
 require_once '../src/routes/product.php';
 
-
 $app->run();

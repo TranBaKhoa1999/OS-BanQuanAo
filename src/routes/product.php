@@ -77,7 +77,7 @@ $app->post('/api/products/add', function ($request, $response, $args) {
 
     $service = new ProductService();
     echo json_encode($service->InsertProduct($name,$image,$brand,$sku,$attribute,$price,$sale_price,$description,$visibility,$date,$cate));
-    // return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
  // hàm insert product_cate  -  chỉ để test vì khi insert product đã gọi hàm này r. -*********************************************************

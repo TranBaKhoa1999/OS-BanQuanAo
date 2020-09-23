@@ -144,7 +144,6 @@ require_once "../src/config/db.php";
             $data->bindParam(':visibility',$visibility);
             $data->bindParam(':date',$date);
 
-            $data->execute();
             if($data->execute()){
                 return true;
             }
@@ -156,7 +155,7 @@ require_once "../src/config/db.php";
             $sql = "UPDATE product SET visibility =:visibility WHERE id= $id ";
             $data = $this->runQuery($sql);
             $data->bindParam(':visibility',$value);
-            $data->execute();
+
             if($data->execute()){
                 return true;
             }
@@ -168,7 +167,7 @@ require_once "../src/config/db.php";
         public function Delete($id){
             $sql = "DELETE FROM product WHERE id = $id";
             $data = $this->runQuery($sql);
-            $data->execute();
+            
             if($data->execute()){
                 return(
                     array('message'=>'delete success!')

@@ -60,7 +60,7 @@ require_once "../src/config/db.php";
             $data->bindParam(':logo',$logo);
             $data->bindParam(':description',$description);
 
-            $data->execute();
+
             if($data->execute()){
                 return (
                     array('message'=>'update success!')
