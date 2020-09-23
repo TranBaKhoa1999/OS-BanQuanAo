@@ -103,15 +103,16 @@ require_once "../src/models/brandModel.php";
         public function GetAllProductsByCate($id_cate){
             if($this->product_cateModel->GetIdProductsByCate($id_cate) ){
                 $listIdProduct =  $this->product_cateModel->GetIdProductsByCate($id_cate);
-
+                
                 $listProduct = array();
+
                 foreach($listIdProduct as $key){
+
                     if($key->id_product == null){
                         return $listIdProduct;
                     }
                     $id = $key->id_product;
                     $product = $this->productModel->GetSingle($id);
-
                     // get properties of product
                     if($product[0]->Attribute != null){
                         $attribute = $this->attributeModel->GetSingle($product[0]->Attribute);
@@ -121,7 +122,7 @@ require_once "../src/models/brandModel.php";
                     }
                     // end get properties
                     $sum= [
-                        'Id'    => $product[0]->Id,
+                        'Id'    => $id,
                         'Name'  => $product[0]->Name,
                         'Image' => $product[0]->Image,
                         'Brand' => $brandName[0]->Name,
@@ -139,7 +140,7 @@ require_once "../src/models/brandModel.php";
                     ];
                     array_push($listProduct,$sum);
                 }
-                // return $listProduct;
+                return $listProduct;
             }
             else{
                 return (
@@ -195,6 +196,56 @@ require_once "../src/models/brandModel.php";
                 );
             }
             
+        }
+        //get all product by cate and brand
+        public function GetAllProductsByCateAndBrand($id_cate,$id_Brand){
+            if($this->product_cateModel->GetIdProductsByCate($id_cate))
+            {
+                $listIdProduct =  $this->product_cateModel->GetIdProductsByCate($id_cate);
+
+                $listProduct = array();
+
+                foreach($listIdProduct as $key){
+                    if($key->id_product == null){
+                        return $listIdProduct;
+                    }
+                    $id = $key->id_product;
+                    $product = $this->productModel->GetSingle($id);
+
+                    if($product[0]->Brand == $id_Brand ){ // nếu brand khớp thì add vào list
+                        $brandName = $this->brandModel->GetSingle($product[0]->Brand);
+                        if($product[0]->Attribute != null){
+                            $attribute = $this->attributeModel->GetSingle($product[0]->Attribute);
+                        }
+                        $sum= [
+                            'Id'    => $product[0]->Id,
+                            'Name'  => $product[0]->Name,
+                            'Image' => $product[0]->Image,
+                            'Brand' => $brandName[0]->Name,
+                            'SKU'   => $product[0]->SKU,
+                            'Size'  => $attribute[0]->Size,
+                            'Color' => $attribute[0]->Color,
+                            'Price' => $product[0]->Price,
+                            'Sale Price'=>$product[0]->Sale_Price,
+                            'Description' =>$product[0]->Description,
+                            'Visibility' =>$product[0]->Visibility,
+                            'Date' =>$product[0]->Date,
+                            'Id Attribute' =>$product[0]->Attribute,
+                            'Id Brand' =>$product[0]->Brand
+    
+                        ];
+                        array_push($listProduct,$sum);
+                    } // end if brand = brand
+
+                } // end foreach
+                return $listProduct;
+
+            }
+            else{
+                return(
+                    array('message'=>'not found')
+                );
+            }
         }
 
         // add Product

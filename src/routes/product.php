@@ -51,7 +51,15 @@ $app->get('/api/products/brand/{id_Brand}', function ($request, $response, $args
 //     }
 //     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 // });
+// get all products by cate and brand
+$app->get('/api/products/cate-brand/{id_Cate}/{id_Brand}', function ($request, $response, $args) {
 
+    $id_Brand = $request->getAttribute('id_Brand');
+    $id_Cate = $request->getAttribute('id_Cate');
+    $service = new ProductService();
+    echo json_encode($service->GetAllProductsByCateAndBrand($id_Cate,$id_Brand));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 // add product
 $app->post('/api/products/add', function ($request, $response, $args) {
 

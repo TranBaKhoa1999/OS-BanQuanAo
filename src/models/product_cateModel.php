@@ -24,12 +24,10 @@ require_once "../src/config/db.php";
             $data->execute();
             if($data->rowcount() > 0){
                 $id_product = $data->fetchAll(PDO::FETCH_OBJ);
-                return $data->rowCount();
+                return $id_product;
             }
             else{
-                return (
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
 
