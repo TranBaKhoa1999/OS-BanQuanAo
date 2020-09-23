@@ -45,10 +45,21 @@ $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
     $image          = $request->getParam('image');
     $description    = $request->getParam('description');
     $parentCategory = $request->getParam('parentcategory');
-    $count          = $request->getParam('count');
+    //$count          = $request->getParam('count');
 
     $service = new CategoryService();
-    echo json_encode($service->UpdateCategory($id,$name,$image,$description,$parentCategory,$brand,$count));
+    echo json_encode($service->UpdateCategory($id,$name,$image,$description,$parentCategory,$brand));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
+
+// update count category
+$app->put('/api/categories/update/{id}', function ($request, $response, $args) {
+
+    $id = $request->getAttribute('id');
+    $count = $request->getParam('count');
+
+    $service = new CategoryService();
+    echo json_encode($service->UpdateCountCategory($id, $count));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
