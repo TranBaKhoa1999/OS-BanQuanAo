@@ -7,7 +7,7 @@ require_once "../src/models/attributeModel.php";
 require_once "../src/models/brandModel.php";
 require_once "../src/models/storageModel.php";
 
-    class CategoryService {
+    class StorageService {
         
         private $productModel;
         private $categoryModel;

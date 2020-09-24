@@ -8,14 +8,14 @@ require '../src/services/storageService.php';
 
 
 //Get All Categories
-$app->get('/api/categories', function ($request, $response, $args) {
+$app->get('/api/storage', function ($request, $response, $args) {
     $service = new StorageService();
     echo json_encode($service->GetAllStorage());
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 //Get Single Storage
-$app->get('/api/categories/{id}', function ($request, $response, $args) {
+$app->get('/api/storage/{id}', function ($request, $response, $args) {
     $id = $request->getAttribute('id');
     $service = new StorageService();
     echo json_encode($service->GetSingleStorage($id));
@@ -24,7 +24,7 @@ $app->get('/api/categories/{id}', function ($request, $response, $args) {
 
 
 //add Storage
-$app->post('/api/categories/add', function ($request, $response, $args) {
+$app->post('/api/storage/add', function ($request, $response, $args) {
 
     $id_Product = $request->getParam('id_product');
     $price_In = $request->getParam('price_in');
@@ -37,7 +37,7 @@ $app->post('/api/categories/add', function ($request, $response, $args) {
 });
 
 // update Storage
-$app->put('/api/categories/update/{id}', function ($request, $response, $args) {
+$app->put('/api/storage/update/{id}', function ($request, $response, $args) {
 
     $id_Product = $request->getParam('id_product');
     $price_In = $request->getParam('price_in');
@@ -50,7 +50,7 @@ $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
 });
 
 // //delete Storage
-// $app->delete('/api/categories/delete/{id}', function ($request, $response, $args) {
+// $app->delete('/api/storage/delete/{id}', function ($request, $response, $args) {
 
 //     $id = $request->getAttribute('id');
 
