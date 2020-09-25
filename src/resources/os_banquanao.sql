@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 25, 2020 at 06:14 AM
+-- Generation Time: Sep 25, 2020 at 06:49 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `os-banquanao`
+-- Database: `os_banquanao`
 --
 
 -- --------------------------------------------------------
@@ -87,6 +87,13 @@ CREATE TABLE `billing` (
   `Status` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
+--
+-- Dumping data for table `billing`
+--
+
+INSERT INTO `billing` (`Id`, `Email`, `Payment_Method`, `Shipping_Method`, `Total`, `Date`, `Status`) VALUES
+(1, 'an.nt.techdev@gmail.com', 1, 1, 100000, '2020-09-23 11:47:07', 'New');
+
 -- --------------------------------------------------------
 
 --
@@ -99,6 +106,14 @@ CREATE TABLE `billing_detail` (
   `Count` int(11) NOT NULL,
   `Price_Buy` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+--
+-- Dumping data for table `billing_detail`
+--
+
+INSERT INTO `billing_detail` (`Id_Billing`, `Id_Product`, `Count`, `Price_Buy`) VALUES
+(1, 1, 2, 60000),
+(1, 4, 1, 40000);
 
 -- --------------------------------------------------------
 
@@ -166,6 +181,14 @@ CREATE TABLE `customer` (
   `Address` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`Email`, `Name`, `Phone`, `Country`, `City`, `Address`) VALUES
+('an.nt.techdev@gmail.com', 'Thien An Nguyen', '1234567890', 'Viet Nam', 'Ho Chi Minh', '240 Duong Quang Ham, Phuong 5'),
+('ohwhynotme1999@gmail.com', 'Ba Khoa Tran', '0987654321', 'Viet Nam', 'Ho Chi Minh', '181 Le Duc Tho, Phuong 17');
+
 -- --------------------------------------------------------
 
 --
@@ -177,6 +200,17 @@ CREATE TABLE `payment_method` (
   `Name` varchar(500) COLLATE utf8mb4_vietnamese_ci NOT NULL,
   `Status` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
+
+--
+-- Dumping data for table `payment_method`
+--
+
+INSERT INTO `payment_method` (`Id`, `Name`, `Status`) VALUES
+(1, 'Thanh toán khi nhận hàng', 'active'),
+(2, 'Thanh toán qua Momo', 'active'),
+(3, 'Thanh toán qua Vnpay', 'inactive'),
+(4, 'Thanh toán qua thẻ tín dụng quốc tế VISA/MASTER CARD', 'delete'),
+(5, 'Thanh toán qua thẻ tín dụng nội địa', 'active');
 
 -- --------------------------------------------------------
 
@@ -420,6 +454,17 @@ CREATE TABLE `shipping_method` (
   `Status` varchar(100) COLLATE utf8mb4_vietnamese_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
+--
+-- Dumping data for table `shipping_method`
+--
+
+INSERT INTO `shipping_method` (`Id`, `Name`, `Cost`, `Status`) VALUES
+(1, 'Giao hàng tiết kiệm', 10000, 'active'),
+(2, 'Giao hàng nhanh', 30000, 'active'),
+(3, 'Giao hàng bình thường', 20000, 'inactive'),
+(4, 'Ninja Van', 5000, 'delete'),
+(5, 'Nhận hàng tại cửa hàng', 0, 'active');
+
 -- --------------------------------------------------------
 
 --
@@ -535,7 +580,7 @@ ALTER TABLE `attribute`
 -- AUTO_INCREMENT for table `billing`
 --
 ALTER TABLE `billing`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `brand`
@@ -553,7 +598,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `payment_method`
 --
 ALTER TABLE `payment_method`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -565,7 +610,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `shipping_method`
 --
 ALTER TABLE `shipping_method`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
