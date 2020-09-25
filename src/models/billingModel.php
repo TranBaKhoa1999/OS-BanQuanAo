@@ -57,8 +57,8 @@ require_once "../src/config/db.php";
             }
         }
         
-        public function Update($id,$email,$payment_method,$shipping_method,$total,$date,$status){
-            $sql = "UPDATE brand SET email =:email, payment_method =:payment_method, shipping_method =:shipping_method, total=:total,date =:date,status =:status WHERE id = $id";
+        public function Update($id,$email,$payment_method,$shipping_method,$total,$date){
+            $sql = "UPDATE billing SET email =:email, payment_method =:payment_method, shipping_method =:shipping_method, total=:total,date =:date WHERE id = $id";
             $data = $this->runQuery($sql);
 
             $data->bindParam(':email',$email);
@@ -66,7 +66,7 @@ require_once "../src/config/db.php";
             $data->bindParam(':shipping_method',$shipping_method);
             $data->bindParam(':total',$total);
             $data->bindParam(':date',$date);
-            $data->bindParam(':status',$status);
+            // $data->bindParam(':status',$status);
 
 
             if($data->execute()){
@@ -80,22 +80,23 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        public function ChangeStatus($id,$status){
+            $sql = "UPDATE billing SET status =:status WHERE id = $id";
+            $data = $this->runQuery($sql);
 
-        // public function Delete($id){
-        //     $sql = "DELETE FROM brand WHERE id = $id";
-        //     $data = $this->runQuery($sql);
-        //     $data->execute();
-        //     if($data->execute()){
-        //         return(
-        //             array('message'=>'delete success!')
-        //         );
-        //     }
-        //     else{
-        //         return(
-        //             array('message'=>'delete fail!')
-        //         );
-        //     }
-        // }
+            $data->bindParam(':status',$status);
+            if($data->execute()){
+                return (
+                    array('message'=>'change status success!')
+                );
+            }
+            else{
+                return (
+                    array('message'=>'change status fail!')
+                );
+            }
+        }
+
 
     }
 

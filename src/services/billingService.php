@@ -28,7 +28,39 @@ require_once "../src/models/productModel.php";
         }
 
         public function GetAllBills(){
-            return $this->billingModel->GetAll();
+            
+            $list= $this->billingModel->GetAll();
+            if($list){
+                $list_Bill = array();
+                foreach($list as $bill){
+                    if($bill->Shipping_Method !=null ){ // get detail ship method of bill
+
+                        $shipping = $this->shipping_methodModel->GetSingle($bill->Shipping_Method);
+                        $name_ship=$shipping[0]->Name;
+                    }
+    
+                    if($bill->Payment_Method !=null ){ // get detail payment method of bill
+                        $payment = $this->payment_methodModel->GetSingle($bill->Payment_Method);
+                        $name_payment=$payment[0]->Name;
+                    }
+                    $sum= [
+                        'Id'                => $bill->Id,
+                        'Shipping Method'   => $name_ship,
+                        'Payment Method'    => $name_payment,
+                        'Total'             => $bill->Total,
+                        'Date'              => $bill->Date,
+                        'Status'            => $bill->Status,
+                        'Email'             =>$bill->Email,
+                    ];
+                    array_push($list_Bill,$sum);
+                }
+                return $list_Bill;
+            }
+            else{
+                return (
+                    array('message'=>'not found')
+                );
+            }
         }
 
         public function GetSingleBill($id_billing){
@@ -119,6 +151,33 @@ require_once "../src/models/productModel.php";
 
         }
 
+        public function ChangeStatusBill($id_billing,$status){
+            $bill = $this->billingModel->GetSingle($id_billing);
+            $flag= false;
+            if($bill){
+                $current_status = $bill[0]->Status;
+
+                if($status == "Cancel"){
+                    $flag= true;
+                }
+                else if($status == "Shipping"){
+                    if($current_status =="New" || $current_status == "Set Up"){
+                        $flag = true;
+                    }
+                }
+                else if($status == "Done"){
+                    
+                    if($current_status =="Shipping"){
+                        $flag= true;
+                    }
+                }
+
+                if($flag){
+                    $this->billingModel->ChangeStatus($id_billing,$status);
+                }
+            }
+        }
+        
         public function InsertBrand($name, $logo, $description){
             return $this->brandModel->Add($name, $logo, $description);
         }

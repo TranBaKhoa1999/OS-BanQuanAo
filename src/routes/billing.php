@@ -21,6 +21,13 @@ $app->get('/api/bills/{id}', function ($request, $response, $args) {
     echo json_encode($service->GetSingleBill($id));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
-
+//change status bill
+$app->put('api/bills/update-status/{id}', function ($request, $response, $args) {
+    $id_billing = $request->getAtrribute('id');
+    $status = $request->getParam('status');
+    $service = new BillingService();
+    echo json_encode($service->ChangeStatusBill($id_billing,$status));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 
 ?>
