@@ -40,7 +40,8 @@ require_once "../src/models/productModel.php";
             $name_customer="";
             $phone_customer="";
             $address_customer="";
-
+            $district="";
+            $city="";
             if($this->billingModel->GetSingle($id_billing) ){
 
                 $bill =  $this->billingModel->GetSingle($id_billing);
@@ -51,12 +52,17 @@ require_once "../src/models/productModel.php";
                     $name_customer=$customer[0]->Name;
                     $phone_customer=$customer[0]->Phone;
                     $address_customer= $customer[0]->Address;
+                    $city = $customer[0]->City;
+                    $district = $customer[0]->District;
                 }
+
                 if($bill[0]->Shipping_Method !=null ){ // get detail ship method of bill
+
                     $shipping = $this->shipping_methodModel->GetSingle($bill[0]->Shipping_Method);
                     $cost_ship=$shipping[0]->Cost;
                     $name_ship=$shipping[0]->Name;
                 }
+
                 if($bill[0]->Payment_Method !=null ){ // get detail payment method of bill
                     $payment = $this->payment_methodModel->GetSingle($bill[0]->Payment_Method);
                     $name_payment=$payment[0]->Name;
@@ -88,17 +94,20 @@ require_once "../src/models/productModel.php";
                 
                 //
                 $sum= [
-                    'Id'    => $bill[0]->Id,
-                    'Shipping Method'  => $name_ship,
-                    'Shipping Cost' =>$cost_ship,
-                    'Payment Method' => $name_payment,
-                    'Total' => $bill[0]->Total,
-                    'Date'   => $bill[0]->Date,
-                    'Status'  => $bill[0]->Status,
-                    'Customer Name' => $name_customer,
-                    'Phone' =>$phone_customer,
-                    'Customer Address' =>$address_customer,
-                    'Detail' =>$detail
+                    'Id'                => $bill[0]->Id,
+                    'Shipping Method'   => $name_ship,
+                    'Shipping Cost'     =>$cost_ship,
+                    'Payment Method'    => $name_payment,
+                    'Total'             => $bill[0]->Total,
+                    'Date'              => $bill[0]->Date,
+                    'Status'            => $bill[0]->Status,
+                    'Customer Name'     => $name_customer,
+                    'Email'             =>$bill[0]->Email,
+                    'Phone'             =>$phone_customer,
+                    'City'              =>$city,
+                    'District'          =>$district,
+                    'Customer Address'  =>$address_customer,
+                    'Detail'            =>$detail
                 ];
                 return $sum;
             }
