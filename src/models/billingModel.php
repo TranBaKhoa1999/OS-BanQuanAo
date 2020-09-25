@@ -2,10 +2,10 @@
 
 require_once "../src/config/db.php";
 
-    class CustomerModel extends DBConnection {
+    class BillingModel extends DBConnection {
         
         public function GetAll(){
-            $sql = "SELECT * FROM customer";
+            $sql = "SELECT * FROM billing";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -19,8 +19,8 @@ require_once "../src/config/db.php";
             }
         }
 
-        public function GetSingle($email){
-            $sql = "SELECT * FROM customer WHERE email = '$email' ";
+        public function GetSingle($id){
+            $sql = "SELECT * FROM billing WHERE id = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -34,17 +34,16 @@ require_once "../src/config/db.php";
             }
         }
 
-        public function Add($email, $name,$phone,$country,$city, $address){
-            $sql = "INSERT INTO customer(email,name,phone,country,city,address) VALUE(:email,:name,:phone,:country,:city,:address)";
+        public function Add($email,$payment_method,$shipping_method,$total,$date,$status){
+            $sql = "INSERT INTO billing(email,payment_method,shipping_method,total,date,status) VALUE(:email,:payment_method,:shipping_method,:total,:date,:status)";
 
             $data = $this->runQuery($sql);
             $data->bindParam(':email',$email);
-            $data->bindParam(':name',$name);
-            $data->bindParam(':phone',$phone);
-            $data->bindParam(':country',$country);
-            $data->bindParam(':city',$city);
-            $data->bindParam(':address',$address);
-            
+            $data->bindParam(':payment_method',$payment_method);
+            $data->bindParam(':shipping_method',$shipping_method);
+            $data->bindParam(':total',$total);
+            $data->bindParam(':date',$date);
+            $data->bindParam(':status',$status);
 
             if($data->execute()){
                 return (
@@ -58,17 +57,18 @@ require_once "../src/config/db.php";
             }
         }
         
-        public function Update($email, $name,$phone,$country,$city, $address){
-            $sql = "UPDATE customer SET name =:name, phone =:phone, country =:country, city =:city, address =:address WHERE email = '$email' ";
+        public function Update($id,$email,$payment_method,$shipping_method,$total,$date,$status){
+            $sql = "UPDATE brand SET email =:email, payment_method =:payment_method, shipping_method =:shipping_method, total=:total,date =:date,status =:status WHERE id = $id";
             $data = $this->runQuery($sql);
-            
-            $data->bindParam(':name',$name);
-            $data->bindParam(':phone',$phone);
-            $data->bindParam(':country',$country);
-            $data->bindParam(':city',$city);
-            $data->bindParam(':address',$address);
 
-            $data->execute();
+            $data->bindParam(':email',$email);
+            $data->bindParam(':payment_method',$payment_method);
+            $data->bindParam(':shipping_method',$shipping_method);
+            $data->bindParam(':total',$total);
+            $data->bindParam(':date',$date);
+            $data->bindParam(':status',$status);
+
+
             if($data->execute()){
                 return (
                     array('message'=>'update success!')

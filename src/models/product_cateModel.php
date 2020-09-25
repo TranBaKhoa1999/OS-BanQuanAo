@@ -95,7 +95,7 @@ require_once "../src/config/db.php";
         public function DeleteAllProductOfCategory($id_cate){
             $sql = "DELETE FROM product_cate WHERE id_Category = $id_cate";
             $data = $this->runQuery($sql);
-            $data->execute();
+
             if($data->execute()){
                 return(
                     array('message'=>'delete success!')
