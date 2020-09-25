@@ -7,7 +7,7 @@ require_once "../src/models/shipping_methodModel.php";
 require_once "../src/models/payment_methodModel.php";
 require_once "../src/models/customerModel.php";
 
-    class BrandService {
+    class BillService {
         
         private $productModel;
         private $billingModel;
