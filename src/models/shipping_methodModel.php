@@ -34,12 +34,13 @@ require_once "../src/config/db.php";
             }
         }
 
-        public function Add($name,$cost){
-            $sql = "INSERT INTO shipping_method(name,cost) VALUE(:name,:cost)";
+        public function Add($name,$cost,$status){
+            $sql = "INSERT INTO shipping_method(name,cost,status) VALUE(:name,:cost,:status)";
 
             $data = $this->runQuery($sql);
             $data->bindParam(':name',$name);
             $data->bindParam(':cost',$cost);
+            $data->bindParam(':status',$status);
 
             if($data->execute()){
                 return (
@@ -53,12 +54,13 @@ require_once "../src/config/db.php";
             }
         }
         
-        public function Update($id,$name,$cost){
-            $sql = "UPDATE shipping_method SET name=:name,cost=:cost WHERE id = $id";
+        public function Update($id,$name,$cost,$status){
+            $sql = "UPDATE shipping_method SET name=:name,cost=:cost,status=:status WHERE id = $id";
             $data = $this->runQuery($sql);
-            
+
             $data->bindParam(':name',$name);
             $data->bindParam(':cost',$cost);
+            $data->bindParam(':status',$status);
 
 
             if($data->execute()){
