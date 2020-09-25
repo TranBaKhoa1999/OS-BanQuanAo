@@ -16,5 +16,6 @@ require_once '../src/routes/category.php';
 require_once '../src/routes/product.php';
 //route storage
 require_once '../src/routes/storage.php';
-
+//route bill
+require_once '../src/routes/billing.php';
 $app->run();
