@@ -34,11 +34,12 @@ require_once "../src/config/db.php";
             }
         }
 
-        public function Add($name,$cost){
-            $sql = "INSERT INTO payment_method(name) VALUE(:name,:name)";
+        public function Add($name,$cost,$status){
+            $sql = "INSERT INTO payment_method(name,status) VALUE(:name,:status)";
 
             $data = $this->runQuery($sql);
             $data->bindParam(':name',$name);
+            $data->bindParam(':status',$status);
 
             if($data->execute()){
                 return (
@@ -52,8 +53,8 @@ require_once "../src/config/db.php";
             }
         }
         
-        public function Update($id,$name){
-            $sql = "UPDATE payment_method SET name=:name WHERE id = $id";
+        public function Update($id,$name,$status){
+            $sql = "UPDATE payment_method SET name=:name,status=:status WHERE id = $id";
             $data = $this->runQuery($sql);
 
             $data->bindParam(':name',$name);
