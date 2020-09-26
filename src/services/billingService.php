@@ -176,7 +176,9 @@ require_once "../src/models/productModel.php";
                     return $this->billingModel->ChangeStatus($id_billing,$status);
                 }
                 else{
-                    return false;
+                    return (
+                        array('message'=>'Change status fail')
+                    );
                 }
             }
         }
@@ -190,6 +192,11 @@ require_once "../src/models/productModel.php";
             else{
                 if($this->customerModel->Add($email,$name,$phone,$city,$district,$address) ){ // ad khách hàng thành công
                     return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+                }
+                else {
+                    return (
+                        array('message'=>'Add fail')
+                    );
                 }
             }
 
