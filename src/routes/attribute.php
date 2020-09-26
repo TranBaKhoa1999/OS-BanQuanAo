@@ -3,15 +3,16 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 // require '../vendor/autoload.php';
-require '../src/models/attributeModel.php';
+require '../src/services/attributeService.php';
 // $app = new \Slim\App;
 
 
 //Get All brand
 $app->get('/api/attributes', function ($request, $response, $args) {
-    $model = new AttributeModel();
-    echo json_encode($model->GetAll());
-    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+    // $service = new AttributeService();
+    // echo json_encode($service->GetAllAttributes() );
+    echo json_encode('wtf');
+    // return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 //Get Single brand

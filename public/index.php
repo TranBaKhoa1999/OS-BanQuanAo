@@ -20,4 +20,6 @@ require_once '../src/routes/storage.php';
 require_once '../src/routes/billing.php';
 //route revenue
 require_once '../src/routes/revenue.php';
+//route attribute
+require_once '../src/routes/attribute.php';
 $app->run();

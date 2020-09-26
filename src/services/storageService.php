@@ -3,7 +3,6 @@
 require_once "../src/models/productModel.php";
 require_once "../src/models/categoryModel.php";
 require_once "../src/models/product_cateModel.php";
-require_once "../src/models/attributeModel.php";
 require_once "../src/models/brandModel.php";
 require_once "../src/models/storageModel.php";
 
@@ -12,7 +11,6 @@ require_once "../src/models/storageModel.php";
         private $productModel;
         private $categoryModel;
         private $product_cateModel;
-        private $attributeModel;
         private $brandModel;
         private $storageModel;
 
@@ -21,7 +19,6 @@ require_once "../src/models/storageModel.php";
             $this->productModel = new ProductModel();
             $this->categoryModel = new CategoryModel();
             $this->product_cateModel = new Product_cateModel();
-            $this->attributeModel = new AttributeModel();
             $this->brandModel = new BrandModel();
             $this->storageModel = new StorageModel();
         }
