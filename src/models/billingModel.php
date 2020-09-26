@@ -80,6 +80,7 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        
         public function ChangeStatus($id,$status){
             $sql = "UPDATE billing SET status =:status WHERE id = $id";
             $data = $this->runQuery($sql);
@@ -93,6 +94,63 @@ require_once "../src/config/db.php";
             else{
                 return (
                     array('message'=>'change status fail!')
+                );
+            }
+        }
+
+        public function RevenueDay($day)
+        {
+            $sql = "SELECT Id, Email, Total, Date FROM billing WHERE YEAR(Date) = YEAR('$day') AND MONTH(Date) = MONTH('$day') AND DAY(Date) = DAY('$day') AND Status = 'Done'";
+            $data = $this->runQuery($sql);
+            $data->execute();
+
+            if($data->rowcount() > 0)
+            {
+                $revenue = $data->fetchAll(PDO::FETCH_OBJ);
+                return ($revenue);
+            }
+            else
+            {
+                return (
+                    array('message'=>'not found')
+                );
+            }
+        }
+
+        public function RevenueMonth($month)
+        {
+            $sql = "SELECT Id, Email, Total, Date FROM billing WHERE YEAR(Date) = YEAR('$month') AND MONTH(Date) = MONTH('$month') AND Status = 'Done'";
+            $data = $this->runQuery($sql);
+            $data->execute();
+
+            if($data->rowcount() > 0)
+            {
+                $revenue = $data->fetchAll(PDO::FETCH_OBJ);
+                return ($revenue);
+            }
+            else
+            {
+                return (
+                    array('message'=>'not found')
+                );
+            }
+        }
+
+        public function RevenueYear($year)
+        {
+            $sql = "SELECT Id, Email, Total, Date FROM billing WHERE YEAR(Date) = '$year' AND Status = 'Done'";
+            $data = $this->runQuery($sql);
+            $data->execute();
+
+            if($data->rowcount() > 0)
+            {
+                $revenue = $data->fetchAll(PDO::FETCH_OBJ);
+                return ($revenue);
+            }
+            else
+            {
+                return (
+                    array('message'=>'not found')
                 );
             }
         }
