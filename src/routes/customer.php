@@ -24,26 +24,27 @@ $app->get('/api/customers/{email}', function ($request, $response, $args) {
 
 //add customer
 $app->post('/api/customers/add', function ($request, $response, $args) {
-    $email           = $request->getParam('email');
-    $name           = $request->getParam('name');
-    $phone           = $request->getParam('phone');
-    $country           = $request->getParam('country');
-    $city           = $request->getParam('city');
-    $address           = $request->getParam('address');
+    
+    $email              = $request->getParam('email');
+    $name               = $request->getParam('name');
+    $phone              = $request->getParam('phone');
+    $city               = $request->getParam('city');
+    $district           = $request->getParam('district');
+    $address            = $request->getParam('address');
     
     $service = new CustomerService();
-    echo json_encode($service->Insertcustomer($email,$name,$phone,$country,$city,$address));
+    echo json_encode($service->Insertcustomer($email,$name,$phone,$city,$district,$address));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
 // update customer
 $app->put('/api/customers/update/{email}', function ($request, $response, $args) {
-    $email = $request->getAttribute('email');
-    $name           = $request->getParam('name');
-    $phone           = $request->getParam('phone');
-    $country           = $request->getParam('country');
-    $city           = $request->getParam('city');
-    $address           = $request->getParam('address');
+    $email              = $request->getParam('email');
+    $name               = $request->getParam('name');
+    $phone              = $request->getParam('phone');
+    $city               = $request->getParam('city');
+    $district           =$request->getParam('district');
+    $address            = $request->getParam('address');
 
     $service = new CustomerService();
     echo json_encode($service->Updatecustomer($email,$name,$phone,$country,$city,$address));

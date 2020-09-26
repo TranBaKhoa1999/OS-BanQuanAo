@@ -46,14 +46,14 @@ $app->put('/api/brands/update/{id}', function ($request, $response, $args) {
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
-//delete brand
-// $app->delete('/api/brands/delete/{id}', function ($request, $response, $args) {
+// delete brand
+$app->delete('/api/brands/delete/{id}', function ($request, $response, $args) {
 
-//     $id = $request->getAttribute('id');
+    $id = $request->getAttribute('id');
 
-//     $service = new BrandService();
-//     echo json_encode($service->Delete($id));
-//     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
-// });
+    $service = new BrandService();
+    echo json_encode($service->DeleteBrand($id));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 
 ?>

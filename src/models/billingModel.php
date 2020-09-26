@@ -34,15 +34,15 @@ require_once "../src/config/db.php";
             }
         }
 
-        public function Add($email,$payment_method,$shipping_method,$total,$date,$status){
-            $sql = "INSERT INTO billing(email,payment_method,shipping_method,total,date,status) VALUE(:email,:payment_method,:shipping_method,:total,:date,:status)";
+        public function Add($email,$payment_method,$shipping_method,$total,$status){
+            $sql = "INSERT INTO billing(email,payment_method,shipping_method,total,date,status) VALUE(:email,:payment_method,:shipping_method,:total,CURRENT_TIMESTAMP,:status)";
 
             $data = $this->runQuery($sql);
             $data->bindParam(':email',$email);
             $data->bindParam(':payment_method',$payment_method);
             $data->bindParam(':shipping_method',$shipping_method);
             $data->bindParam(':total',$total);
-            $data->bindParam(':date',$date);
+            // $data->bindParam(':date',$date);
             $data->bindParam(':status',$status);
 
             if($data->execute()){

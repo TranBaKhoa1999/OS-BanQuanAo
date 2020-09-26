@@ -36,6 +36,9 @@ require_once "../src/models/brandModel.php";
         public function UpdateBrand($id, $name, $logo, $description){
             return $this->brandModel->Update($id, $name, $logo, $description);
         }
+        public function DeleteBrand($id){
+            return $this->brandModel->Delete($id);
+        }
 
     }
 

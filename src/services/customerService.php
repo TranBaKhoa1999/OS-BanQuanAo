@@ -19,12 +19,12 @@ require_once "../src/models/customerModel.php";
             return $this->customerModel->GetSingle($email);
         }
 
-        public function InsertCustomer($email,$name,$phone,$country,$city,$address){
-            return $this->customerModel->Add($email,$name,$phone,$country,$city,$address);
+        public function InsertCustomer($email,$name,$phone,$city,$district,$address){
+            return $this->customerModel->Add($email,$name,$phone,$city,$district,$address);
         }
 
-        public function UpdateCustomer($email,$name,$phone,$country,$city,$address){
-            return $this->customerModel->Update($email,$name,$phone,$country,$city,$address);
+        public function UpdateCustomer($email,$name,$phone,$city,$district,$address){
+            return $this->customerModel->Update($email,$name,$phone,$city,$district,$address);
         }
 
     }

@@ -173,13 +173,30 @@ require_once "../src/models/productModel.php";
                 }
 
                 if($flag){
-                    $this->billingModel->ChangeStatus($id_billing,$status);
+                    return $this->billingModel->ChangeStatus($id_billing,$status);
+                }
+                else{
+                    return false;
                 }
             }
         }
-        
-        public function InsertBrand($name, $logo, $description){
-            return $this->brandModel->Add($name, $logo, $description);
+        // admin tao bill moi
+        public function SetupNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method){
+            
+            $customer = $this->customerModel->GetSingle($email);
+            if($customer){
+                return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+            }
+            else{
+                if($this->customerModel->Add($email,$name,$phone,$city,$district,$address) ){ // ad khách hàng thành công
+                    return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+                }
+            }
+
+        }
+        // customer tao bill
+        public function InsertNewBill(){
+            return 0;
         }
 
         public function UpdateBrand($id, $name, $logo, $description){
