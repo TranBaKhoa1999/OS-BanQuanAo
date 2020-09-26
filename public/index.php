@@ -18,4 +18,6 @@ require_once '../src/routes/product.php';
 require_once '../src/routes/storage.php';
 //route bill
 require_once '../src/routes/billing.php';
+//route revenue
+require_once '../src/routes/revenue.php';
 $app->run();
