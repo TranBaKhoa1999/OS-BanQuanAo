@@ -6,7 +6,8 @@ require_once "../src/config/db.php";
 
         // ------------------------------------------------- GET---------------------------------------------------
         public function GetAll(){
-            $data = $this->runQuery('select * from storage');
+            $sql = "SELECT * FROM `storage` JOIN product a Where Id_Product = Id and a.Visibility !='Delete' ";
+            $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
                 $storage = $data->fetchAll(PDO::FETCH_OBJ);
