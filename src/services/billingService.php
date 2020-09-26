@@ -74,9 +74,10 @@ require_once "../src/models/productModel.php";
             $address_customer="";
             $district="";
             $city="";
-            if($this->billingModel->GetSingle($id_billing) ){
+            $bill =  $this->billingModel->GetSingle($id_billing);
+            if($bill){
 
-                $bill =  $this->billingModel->GetSingle($id_billing);
+                // $bill =  $this->billingModel->GetSingle($id_billing);
 
                 //get detail bill
                 if($bill[0]->Email != null){ // get detail customer

@@ -28,9 +28,7 @@ require_once "../src/config/db.php";
                 return $brand;
             }
             else{
-                return (
-                    array('message'=>'not found')
-                );
+                return false;
             }
         }
 
