@@ -74,6 +74,33 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        public function UpdateStatus($id,$status){
+            $sql ="UPDATE shipping_method SET status ='$status' WHERE id=$id";
+            $data = $this->runQuery($sql);
+            if($data->execute()){
+                return (
+                    array('message'=>'update success!')
+                );
+            }
+            else{
+                return (
+                    array('message'=>'update fail!')
+                );
+            }
+        }
+        public function GetAllBillRelative($id){
+            $sql ="SELECT * FROM `billing` WHERE shipping_method = $id AND Status ='Done'";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->rowcount() > 0){
+                $brand = $data->fetchAll(PDO::FETCH_OBJ);
+                return ($brand);
+            }
+            else{
+                return false;
+            }
+        }
+
 
     }
 

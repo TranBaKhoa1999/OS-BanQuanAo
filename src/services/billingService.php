@@ -74,6 +74,7 @@ require_once "../src/models/productModel.php";
             $address_customer="";
             $district="";
             $city="";
+            $total=0;
             $bill =  $this->billingModel->GetSingle($id_billing);
             if($bill){
 
@@ -94,6 +95,7 @@ require_once "../src/models/productModel.php";
                     $shipping = $this->shipping_methodModel->GetSingle($bill[0]->Shipping_Method);
                     $cost_ship=$shipping[0]->Cost;
                     $name_ship=$shipping[0]->Name;
+                    $total += (int)$cost_ship;
                 }
 
                 if($bill[0]->Payment_Method !=null ){ // get detail payment method of bill
@@ -102,16 +104,17 @@ require_once "../src/models/productModel.php";
                 }
                 // get Bill's detail
                 $bill_detail = $this->billing_detailModel->Getsingle($bill[0]->Id);
-                if($bill_detail!=null){
+                if($bill_detail){
                     $detail=array();
                     for($i=0;$i<count($bill_detail);$i++){
-
+                        if($bill_detail[0]==null) break;
                         // get product name
                         $product = $this->productModel->Getsingle($bill_detail[$i]->Id_Product);
                         if($product){
                             $name = $product[0]->Name;
                             $count= $bill_detail[$i]->Count;
                             $price = $bill_detail[$i]->Price_Buy;
+                            $total += ((int)$count*(int)$price);
                         }
                         $sub_detail =[
                             'Id Product' =>$product[0]->Id,
@@ -131,7 +134,7 @@ require_once "../src/models/productModel.php";
                     'Shipping Method'   => $name_ship,
                     'Shipping Cost'     =>$cost_ship,
                     'Payment Method'    => $name_payment,
-                    'Total'             => $bill[0]->Total,
+                    'Total'             => $total,
                     'Date'              => $bill[0]->Date,
                     'Status'            => $bill[0]->Status,
                     'Customer Name'     => $name_customer,
@@ -201,6 +204,29 @@ require_once "../src/models/productModel.php";
                 }
             }
 
+        }
+        public function InsertBillDetail($id_billing,$id_product,$count){
+            $product = $this->productModel->GetSingle($id_product);
+            if($product){
+                $price_buy = $product[0]->Sale_Price;
+                if($this->billing_detailModel->Add($id_billing,$id_product,$count,$price_buy)){
+                    return $this ->UpdateTotalBill($id_billing);
+                }
+            }
+            else{
+                return (
+                    array('message'=>'Add fail')
+                );
+            }
+        }
+        public function DeleteProductInBill($id_billing,$id_product){
+            $this->billing_detailModel->Delete($id_billing,$id_product);
+            return $this ->UpdateTotalBill($id_billing);
+        }
+
+        public function UpdateTotalBill($id_billing){
+            $total = $this->GetSingleBill($id_billing)['Total'];
+            return $this->billingModel->Updatetotal($id_billing,$total);
         }
         // customer tao bill
         public function InsertNewBill(){

@@ -75,6 +75,22 @@ require_once "../src/config/db.php";
             }
         }
 
+        public function Delete($id_billing,$id_product){
+            $sql = "DELETE FROM billing_detail WHERE id_billing = $id_billing AND id_product= $id_product";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->execute()){
+                return(
+                    array('message'=>'delete success!')
+                );
+            }
+            else{
+                return(
+                    array('message'=>'delete fail!')
+                );
+            }
+        }
+
     }
 
 ?>

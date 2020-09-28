@@ -22,4 +22,8 @@ require_once '../src/routes/billing.php';
 require_once '../src/routes/revenue.php';
 //route attribute
 require_once '../src/routes/attribute.php';
+//route method
+require_once '../src/routes/method.php';
+//route statistical
+require_once '../src/routes/statistical.php';
 $app->run();

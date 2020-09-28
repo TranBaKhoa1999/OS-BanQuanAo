@@ -3,7 +3,7 @@
 require_once "../src/models/shipping_methodModel.php";
 require_once "../src/models/payment_methodModel.php";
 
-    class BrandService {
+    class MethodService {
         
         private $shipping_methodModel;
         private $payment_methodModel;
@@ -11,7 +11,7 @@ require_once "../src/models/payment_methodModel.php";
         public function __construct()
         {
             $this->shipping_methodModel = new Shipping_methodModel();
-            $this->$payment_methodModel = new Payment_methodModel();
+            $this->payment_methodModel = new Payment_methodModel();
         }
 
         public function GetAllShippingMethod(){
@@ -30,39 +30,93 @@ require_once "../src/models/payment_methodModel.php";
         }
 
         public function UpdateStatusShippingMethod($id,$status){
-            if($status =="stop active") // ngưng hoạt động
+            if($status =="inactive") // ngưng hoạt động // chỉ dc dừng khi các bill liên quan đã done
             {
-                 // chỉ dc dừng khi các bill liên quan đã done
+                 $bills_relative = $this->shipping_methodModel->GetAllBillRelative($id);
+                 if($bills_relative){
+                     return(
+                         array('message'=>'Change status fail. Some bills using this method.')
+                     );
+                 }
+                 else{
+                     return $this->shipping_methodModel->UpdateStatus($id,$status);
+                 }
             }
-            else if($status == "delete") // đã xóa
+            else if($status == "delete") // đã xóa // chỉ dc xóa khi các bill liên quan đã Done
             {
-                // chỉ dc xóa khi các bill liên quan đã Done
+                $bills_relative = $this->shipping_methodModel->GetAllBillRelative($id);
+                if($bills_relative){
+                    return(
+                        array('message'=>'Change status fail. Some bills using this method.')
+                    );
+                }
+                else{
+                    return $this->shipping_methodModel->UpdateStatus($id,$status);
+                }
             }
-            else if($status == "stop support") // ngưng hỗ trợ
+            else if($status == "stop support") // ngưng hỗ trợ // có thể ngưng hỗ trợ bất cứ lúc nào
             {
-                // có thể ngưng hỗ trợ bất cứ lúc nào
+                return $this->shipping_methodModel->UpdateStatus($id,$status);
             }
-            else if($status == "active") // hoạt động
+            else if($status == "active") // hoạt động  // có thể hoạt động khi chưa xóa method này
             {
-                // có thể hoạt động khi chưa xóa method này
+                
+                $method = $this->shipping_methodModel->GetSingle($id);
+                $current_Status = $method[0]->Status;
+                if($current_Status !=null && $current_Status !='delete'){
+                    return $this->shipping_methodModel->UpdateStatus($id,$status);
+                }
+                else{
+                    return(
+                        array('message'=>'Change status fail')
+                    );
+                }
+               
             }
         }
         public function UpdateStatusPaymentMethod($id,$status){
-            if($status =="stop active") // ngưng hoạt động
+            if($status =="inactive") // ngưng hoạt động // chỉ dc dừng khi các bill liên quan đã done
             {
-                 // chỉ dc dừng khi các bill liên quan đã done
+                 $bills_relative = $this->payment_methodModel->GetAllBillRelative($id);
+                 if($bills_relative){
+                     return(
+                         array('message'=>'Change status fail. Some bills using this method.')
+                     );
+                 }
+                 else{
+                     return $this->payment_methodModel->UpdateStatus($id,$status);
+                 }
             }
-            else if($status == "delete") // đã xóa
+            else if($status == "delete") // đã xóa // chỉ dc xóa khi các bill liên quan đã Done
             {
-                // chỉ dc xóa khi các bill liên quan đã Done
+                $bills_relative = $this->payment_methodModel->GetAllBillRelative($id);
+                if($bills_relative){
+                    return(
+                        array('message'=>'Change status fail. Some bills using this method.')
+                    );
+                }
+                else{
+                    return $this->payment_methodModel->UpdateStatus($id,$status);
+                }
             }
-            else if($status == "stop support") // ngưng hỗ trợ
+            else if($status == "stop support") // ngưng hỗ trợ // có thể ngưng hỗ trợ bất cứ lúc nào
             {
-                // có thể ngưng hỗ trợ bất cứ lúc nào
+                return $this->payment_methodModel->UpdateStatus($id,$status);
             }
-            else if($status == "active") // hoạt động
+            else if($status == "active") // hoạt động  // có thể hoạt động khi chưa xóa method này
             {
-                // có thể hoạt động khi chưa xóa method này
+                
+                $method = $this->payment_methodModel->GetSingle($id);
+                $current_Status = $method[0]->Status;
+                if($current_Status !=null && $current_Status !='delete'){
+                    return $this->payment_methodModel->UpdateStatus($id,$status);
+                }
+                else{
+                    return(
+                        array('message'=>'Change status fail')
+                    );
+                }
+               
             }
         }
 

@@ -5,6 +5,7 @@ require_once "../src/models/categoryModel.php";
 require_once "../src/models/product_cateModel.php";
 require_once "../src/models/attributeModel.php";
 require_once "../src/models/brandModel.php";
+require_once "../src/models/storageModel.php";
 
     class ProductService {
         
@@ -13,6 +14,7 @@ require_once "../src/models/brandModel.php";
         private $product_cateModel;
         private $attributeModel;
         private $brandModel;
+        private $storageModel;
 
         public function __construct()
         {
@@ -21,6 +23,7 @@ require_once "../src/models/brandModel.php";
             $this->product_cateModel = new Product_cateModel();
             $this->attributeModel = new AttributeModel();
             $this->brandModel = new BrandModel();
+            $this->storageModel = new StorageModel();
         }
 
         public function GetAllProducts(){
@@ -262,7 +265,9 @@ require_once "../src/models/brandModel.php";
                     $num = (int)($thisCount[0]->Count) + 1;
                     $this->categoryModel->UpdateCount($listCate[$i],$num);
                 }
-
+                // insert storage
+                $this->storageModel->Add($id,0,0,"Out Stock");
+                
                 return (
                     array('message'=>'Insert Success')
                 );
@@ -321,7 +326,7 @@ require_once "../src/models/brandModel.php";
                 $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa bảng liên quan ( produt_cate);
 
                 $listCate = $this->product_cateModel->GetIdCatesByProduct($id); // lấy ra danh sách cate của product
-
+                
                 foreach($listCate as $cate){
                     $thisCount = $this->categoryModel->GetSingle($cate->id_category);
                     $num = (int)($thisCount[0]->Count) - 1;

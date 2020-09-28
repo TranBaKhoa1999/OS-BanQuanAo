@@ -53,5 +53,23 @@ $app->put('/api/bills/update-status/{id}/{status}', function ($request, $respons
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
+/// ----------------------------------- Bill Detail ----------------------
+// insert product to bill (only bill type : Set up)
+$app->post('/api/bills/addproduct', function ($request, $response, $args) {
+    $id_billing =  $request->getParam('id_billing');
+    $id_product =  $request->getParam('id_product');
+    $count =  $request->getParam('count');
+    $service = new BillingService();
+    echo json_encode($service->InsertBillDetail($id_billing,$id_product,$count) );
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
+// delete product in bill
+$app->delete('/api/bills/deleteproduct/{id_billing}/{id_product}', function ($request, $response, $args) {
+    $id_billing =  $request->getAttribute('id_billing');
+    $id_product =  $request->getAttribute('id_product');
+    $service = new BillingService();
+    echo json_encode($service->DeleteProductInBill($id_billing,$id_product) );
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 
 ?>

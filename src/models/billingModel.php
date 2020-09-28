@@ -78,7 +78,20 @@ require_once "../src/config/db.php";
                 );
             }
         }
-        
+        public function UpdateTotal($id,$total){
+            $sql ="UPDATE billing SET total = $total WHERE id =$id";
+            $data = $this->runQuery($sql);
+            if($data->execute()){
+                return (
+                    array('message'=>'update success!')
+                );
+            }
+            else{
+                return (
+                    array('message'=>'update fail!')
+                );
+            }
+        }
         public function ChangeStatus($id,$status){
             $sql = "UPDATE billing SET status =:status WHERE id = $id";
             $data = $this->runQuery($sql);
