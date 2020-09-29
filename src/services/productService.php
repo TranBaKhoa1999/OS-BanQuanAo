@@ -6,6 +6,7 @@ require_once "../src/models/product_cateModel.php";
 require_once "../src/models/attributeModel.php";
 require_once "../src/models/brandModel.php";
 require_once "../src/models/storageModel.php";
+require_once "../src/models/statisticalModel.php";
 
     class ProductService {
         
@@ -15,6 +16,7 @@ require_once "../src/models/storageModel.php";
         private $attributeModel;
         private $brandModel;
         private $storageModel;
+        private $statisticalModel;
 
         public function __construct()
         {
@@ -24,6 +26,7 @@ require_once "../src/models/storageModel.php";
             $this->attributeModel = new AttributeModel();
             $this->brandModel = new BrandModel();
             $this->storageModel = new StorageModel();
+            $this->statisticalModel = new StatisticalModel();
         }
 
         public function GetAllProducts(){
@@ -267,7 +270,8 @@ require_once "../src/models/storageModel.php";
                 }
                 // insert storage
                 $this->storageModel->Add($id,0,0,"Out Stock");
-                
+                //insert statistical
+                $this->statisticalModel->Add($id,0,0);
                 return (
                     array('message'=>'Insert Success')
                 );

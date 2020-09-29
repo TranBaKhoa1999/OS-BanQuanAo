@@ -20,4 +20,11 @@ $app->get('/api/statistical/{id_product}', function ($request, $response, $args)
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
+// update view
+$app->put('/api/statistical/update-view/{id_product}', function ($request, $response, $args) {
+    $id_product = $request ->getAttribute('id_product');
+    $service = new StatisticalService();
+    echo json_encode($service->UpdateView($id_product));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 ?>

@@ -7,6 +7,7 @@ require_once "../src/models/shipping_methodModel.php";
 require_once "../src/models/payment_methodModel.php";
 require_once "../src/models/customerModel.php";
 require_once "../src/models/productModel.php";
+require_once "../src/models/statisticalModel.php";
 
     class BillingService {
         
@@ -16,6 +17,7 @@ require_once "../src/models/productModel.php";
         private $shipping_methodModel;
         private $payment_methodModel;
         private $customerModel;
+        private $statisticalModel;
 
         public function __construct()
         {
@@ -25,6 +27,7 @@ require_once "../src/models/productModel.php";
             $this->shipping_methodModel = new Shipping_methodModel();
             $this->payment_methodModel = new Payment_methodModel();
             $this->customerModel = new CustomerModel();
+            $this->statisticalModel = new StatisticalModel();
         }
 
         public function GetAllBills(){
@@ -177,6 +180,12 @@ require_once "../src/models/productModel.php";
                 }
 
                 if($flag){
+                    if($status =="Done"){
+                        $This_bill = $this->GetSingleBill($id_billing)['Detail'];
+                        for($i = 0 ;$i < count($This_bill) ;$i++){
+                            $this->statisticalModel->UpdatePurchase($This_bill[$i]['Id Product'],$This_bill[$i]['Count']);
+                        }
+                    }
                     return $this->billingModel->ChangeStatus($id_billing,$status);
                 }
                 else{

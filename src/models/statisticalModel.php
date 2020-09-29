@@ -34,6 +34,49 @@ require_once "../src/config/db.php";
                 );
             }
         }
+        
+        //add new statistical khi add new product
+        public function Add($id_product,$view,$purchase){
+            $sql ="INSERT INTO `statistical`(`Id_Product`, `View`, `Purchase`) VALUES ($id_product,$view,$purchase)";
+            $data = $this->runQuery($sql);
+
+            if($data->execute()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        //update luot mua
+        public function UpdatePurchase($id_product,$count_buy){
+            $sql = "UPDATE statistical SET purchase =purchase+$count_buy WHERE id_product = $id_product";
+            $data = $this->runQuery($sql);
+            if($data->execute()){
+                return (
+                    array('message'=>'update success!')
+                );
+            }
+            else{
+                return (
+                    array('message'=>'update fail!')
+                );
+            }
+        }
+        // update view khi customer xem sản phẩm
+        public function UpdateView($id_product){
+            $sql = "UPDATE statistical SET view =view+1 WHERE id_product = $id_product";
+            $data = $this->runQuery($sql);
+            if($data->execute()){
+                return (
+                    array('message'=>'update success!')
+                );
+            }
+            else{
+                return (
+                    array('message'=>'update fail!')
+                );
+            }
+        }
 
     }
 

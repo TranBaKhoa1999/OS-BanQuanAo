@@ -20,7 +20,13 @@ require_once "../src/models/statisticalModel.php";
         public function GetSingleStatistical($id_product){
             return $this->statisticalModel->GetSingle($id_product);
         }
-
+        // update purchase
+        public function UpdatePurchase($id_product,$count_buy){
+            return $this->statisticalModel->UpdatePurchase($id_product,$count_buy);
+        }
+        public function UpdateView($id_product){
+            return $this->statisticalModel->UpdateView($id_product);
+        }
     }
 
 ?>
