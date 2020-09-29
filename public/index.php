@@ -29,3 +29,4 @@ require_once '../src/routes/method.php';
 //route statistical
 require_once '../src/routes/statistical.php';
 $app->run();
+?>

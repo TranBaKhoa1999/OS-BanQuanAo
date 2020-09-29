@@ -6,7 +6,7 @@ require_once "../src/config/db.php";
 
         // ------------------------------------------------- GET---------------------------------------------------
         public function GetAll(){
-            $sql = "SELECT * FROM `storage` JOIN product a Where Id_Product = Id and a.Visibility !='Delete' ";
+            $sql = "SELECT Id_product,a.Name,count,stock,price_in FROM `storage` JOIN product a Where Id_Product = Id and a.Visibility !='Delete' ";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
@@ -21,7 +21,7 @@ require_once "../src/config/db.php";
         }
 
         public function GetSingle($id){
-            $sql = "SELECT * FROM storage WHERE id_Product = $id";
+            $sql = "SELECT Id_product,a.Name,count,stock,price_in FROM storage JOIN product a Where Id_Product = Id and a.Visibility !='Delete' AND id_Product = $id";
             $data = $this->runQuery($sql);
             $data->execute();
             if($data->rowcount() > 0){
