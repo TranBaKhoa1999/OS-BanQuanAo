@@ -269,9 +269,9 @@ require_once "../src/models/statisticalModel.php";
                     $this->categoryModel->UpdateCount($listCate[$i],$num);
                 }
                 // insert storage
-                $this->storageModel->Add($id,0,0,"Out Stock");
+                $this->storageModel->Add($id[0]->id,0,0,"Out Stock");
                 //insert statistical
-                $this->statisticalModel->Add($id,0,0);
+                $this->statisticalModel->Add($id[0]->id,0,0);
                 return (
                     array('message'=>'Insert Success')
                 );
