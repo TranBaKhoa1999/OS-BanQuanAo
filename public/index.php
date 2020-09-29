@@ -6,6 +6,8 @@ header('Access-Control-Allow-Origin: *');
 require '../vendor/autoload.php';
 
 $app = new \Slim\App;
+//route endpoint
+require_once '../src/routes/endpoint.php';
 //route customer
 require_once '../src/routes/customer.php';
 //route brand
