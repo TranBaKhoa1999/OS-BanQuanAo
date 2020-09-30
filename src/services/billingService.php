@@ -196,15 +196,25 @@ require_once "../src/models/statisticalModel.php";
             }
         }
         // admin tao bill moi
-        public function SetupNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method){
+        public function SetupNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method,$case){
             
             $customer = $this->customerModel->GetSingle($email);
             if($customer){
-                return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+                if($case == 1){
+                    return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+                }
+                else{
+                    return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'New');
+                }
             }
             else{
                 if($this->customerModel->Add($email,$name,$phone,$city,$district,$address) ){ // ad khách hàng thành công
-                    return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+                    if($case == 1){
+                        return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'Set Up');
+                    }
+                    else{
+                        return $this->billingModel->Add($email,$payment_method,$shipping_method,0,'New');
+                    }
                 }
                 else {
                     return (
@@ -237,14 +247,30 @@ require_once "../src/models/statisticalModel.php";
             $total = $this->GetSingleBill($id_billing)['Total'];
             return $this->billingModel->Updatetotal($id_billing,$total);
         }
+
         // customer tao bill
-        public function InsertNewBill(){
-            return 0;
+        public function InsertNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method,$array_products){
+            if($this->SetupNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method,2)){
+                $id = $this->billingModel->GetLastId();
+                for($i=0;$i<count($array_products);$i++){
+                    echo $array_products[$i]['id_product'].' '.$array_products[$i]['count'];
+                    $this->InsertBillDetail($id[0]->id, $array_products[$i]['id_product'], $array_products[$i]['count']);
+                }
+                return (
+                    array('message'=>'SUCCESS')
+                );    
+            }
+            else{
+                return (
+                    array('message'=>'ERROR')
+                );    
+            }
+            
         }
 
-        public function UpdateBrand($id, $name, $logo, $description){
-            return $this->brandModel->Update($id, $name, $logo, $description);
-        }
+        // public function UpdateBrand($id, $name, $logo, $description){
+        //     return $this->brandModel->Update($id, $name, $logo, $description);
+        // }
 
     }
 

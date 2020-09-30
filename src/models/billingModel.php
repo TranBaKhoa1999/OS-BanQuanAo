@@ -31,7 +31,18 @@ require_once "../src/config/db.php";
                 return false;
             }
         }
-
+        public function GetLastId(){
+            $sql = "SELECT MAX(id) id FROM billing";
+            $data = $this->runQuery($sql);
+            $data->execute();
+            if($data->rowcount() > 0){
+                $id = $data->fetchAll(PDO::FETCH_OBJ);
+                return($id);
+            }
+            else{
+                return false;
+            }
+        }
         public function Add($email,$payment_method,$shipping_method,$total,$status){
             $sql = "INSERT INTO billing(email,payment_method,shipping_method,total,date,status) VALUE(:email,:payment_method,:shipping_method,:total,CURRENT_TIMESTAMP,:status)";
 

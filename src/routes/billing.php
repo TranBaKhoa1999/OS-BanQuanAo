@@ -40,7 +40,7 @@ $app->post('/api/bills/addbyadmin', function ($request, $response, $args) {
     // $status           = $request->getParam('name'); // auto 'Set up'
 
     $service = new BillingService();
-    echo json_encode($service->SetupNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method));
+    echo json_encode($service->SetupNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method,1));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -72,4 +72,27 @@ $app->delete('/api/bills/deleteproduct/{id_billing}/{id_product}', function ($re
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
+$app->post('/api/bills/addbyshop', function ($request, $response, $args) {
+    // thong tin khach hang
+    $email           = $request->getParam('email');
+    $name           = $request->getParam('name');
+    $phone           = $request->getParam('phone');
+    $district           = $request->getParam('district');
+    $city           = $request->getParam('city');
+    $address           = $request->getParam('address');
+
+    // thong tin bill
+
+    $payment_method           = $request->getParam('payment_method');
+    $shipping_method           = $request->getParam('shipping_method');
+    
+    $array_products = $request->getParam('array_products');
+    // $total           = $request->getParam('name'); // auto 0
+    // $date           = $request->getParam('date');
+    // $status           = $request->getParam('name'); // auto 'Set up'
+
+    $service = new BillingService();
+    echo json_encode($service->InsertNewBill($email,$name,$phone,$city,$district,$address,$payment_method,$shipping_method,$array_products));
+    return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
+});
 ?>
