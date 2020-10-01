@@ -155,16 +155,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_vietnamese_ci;
 
 --
--- Dumping data for table `category`
 --
-
-INSERT INTO `category` (`Id`, `Name`, `Image`, `Description`, `ParentCategory`, `Count`) VALUES
-(1, 'Áo thun', 'Image', 'Đây là áo thun', NULL, 0),
-(2, 'Áo thun tay ngắn', 'Image', 'Đây là áo thun tay ngắn', 1, 0),
-(3, 'Áo thun tay dài', 'Image', 'Đây là áo thun tay dài', 1, 0),
-(4, 'Áo sơ mi', 'Image', 'Đây là áo sơ mi', NULL, 0),
-(5, 'Áo sơ mi tay ngắn', 'Image', 'Đây là sơ mi tay ngắn', 4, 0),
-(6, 'Áo sơ mi tay dài', 'Image', 'Đây là áo sơ mi tay dài', 4, 0);
 
 -- --------------------------------------------------------
 
@@ -393,7 +384,7 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `payment_method`

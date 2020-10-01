@@ -10,7 +10,9 @@
 
 	  try{
 		$this->db = new PDO('mysql:host='.$host.';dbname='.$dbname,$username,$password);
+		$this->db->query("SET CHARACTER SET utf8;");
 
+		$this->db->query("SET collation_connection = utf8_unicode_ci;");
 		$this->db->SetAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	  }
 	  catch(PDOException $e){

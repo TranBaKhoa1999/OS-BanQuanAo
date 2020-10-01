@@ -2,7 +2,7 @@
 
 require_once "../src/models/productModel.php";
 require_once "../src/models/billingModel.php";
-require_once "../src/models/billing_detailModel.php";
+require_once "../src/models/billing_DetailModel.php";
 require_once "../src/models/shipping_methodModel.php";
 require_once "../src/models/payment_methodModel.php";
 require_once "../src/models/customerModel.php";

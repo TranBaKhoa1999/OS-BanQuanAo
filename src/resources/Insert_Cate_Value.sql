@@ -9,12 +9,10 @@ INSERT INTO brand(Id, Name, Logo, Description) VALUES
 
 -- Insert Category table
 INSERT INTO category(Id, Name, Image, Description, ParentCategory, Count) VALUES 
-(0, 'Áo thun', 'Image', 'Đây là áo thun', NULL, 0),
-(0, 'Áo thun tay ngắn', 'Image', 'Đây là áo thun tay ngắn', NULL, 0),
-(0, 'Áo thun tay dài', 'Image', 'Đây là áo thun tay dài', NULL, 0),
-(0, 'Áo sơ mi', 'Image', 'Đây là áo sơ mi', NULL, 0),
-(0, 'Áo sơ mi tay ngắn', 'Image', 'Đây là sơ mi tay ngắn', NULL, 0),
-(0, 'Áo sơ mi tay dài', 'Image', 'Đây là áo sơ mi tay dài', NULL, 0);
+(0, 'Áo', 'Image', 'Đây là áo', NULL, 0),
+(0, 'Quần', 'Image', 'Đây là Quần', NULL, 0),
+(0, 'Mũ', 'Image', 'Đây là Mũ', NULL, 0),
+(0, 'Nhẫn', 'Image', 'Đây là Nhẫn', NULL, 0);
 
 
 -- Insert Attribute table
