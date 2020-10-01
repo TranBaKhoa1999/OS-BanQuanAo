@@ -327,7 +327,6 @@ require_once "../src/models/statisticalModel.php";
         public function DeleteProduct($id){ // change visibility => 'xoa'
             if($this->productModel->ChangeVisibility($id,"Delete")){
                 
-                $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa bảng liên quan ( produt_cate);
 
                 $listCate = $this->product_cateModel->GetIdCatesByProduct($id); // lấy ra danh sách cate của product
                 
@@ -336,6 +335,7 @@ require_once "../src/models/statisticalModel.php";
                     $num = (int)($thisCount[0]->Count) - 1;
                     $this->categoryModel->UpdateCount($cate->id_category,$num);
                 }
+                $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa bảng liên quan ( produt_cate);
                 return (
                     array('message'=>'Delete Success')
                 );
