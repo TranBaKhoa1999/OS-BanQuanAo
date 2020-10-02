@@ -294,7 +294,6 @@ require_once "../src/models/statisticalModel.php";
 
                 $listCate = explode('/', $cate); // tách chuỗi - xóa đưa vào mảng
 
-                $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa hết các Cate cũ của product
 
                 // Giảm số lượng Count của Cate cũ
                 $listProduct_Cate = $this->product_cateModel->GetIdCatesByProduct($id); // lấy ra danh sách cate của product
@@ -304,7 +303,7 @@ require_once "../src/models/statisticalModel.php";
                     $num = (int)($thisCount[0]->Count) - 1;
                     $this->categoryModel->UpdateCount($cate->id_category,$num);
                 }
-
+                $this->product_cateModel->DeleteCategoryOfProduct($id); // xóa hết các Cate cũ của product
                 // Insert lại theo dữ liệu đưa lên - dạng chuỗi // 
                 for($i = 0; $i<count($listCate);$i++){
                     $this->product_cateModel->Add($listCate[$i],$id);
