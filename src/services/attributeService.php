@@ -19,12 +19,12 @@ require_once "../src/models/attributeModel.php";
             return $this->attributeModel->GetSingle($id);
         }
 
-        public function InsertAttribute($name, $logo, $description){
-            return $this->attributeModel->Add($name, $logo, $description);
+        public function InsertAttribute($size, $color){
+            return $this->attributeModel->Add($size, $color);
         }
 
-        public function UpdateAttribute($id, $name, $logo, $description){
-            return $this->attributeModel->Update($id, $name, $logo, $description);
+        public function UpdateAttribute($id, $size, $color){
+            return $this->attributeModel->Update($id, $size, $color);
         }
         public function DeleteAttribute($id){
             return $this->attributeModel->Delete($id);

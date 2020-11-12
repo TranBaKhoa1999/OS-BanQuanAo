@@ -29,11 +29,10 @@ $app->post('/api/categories/add', function ($request, $response, $args) {
     $image          = $request->getParam('image');
     $description    = $request->getParam('description');
     $parentCategory = $request->getParam('parentcategory');
-    $brand          = $request->getParam('brand');
     $count          = $request->getParam('count');
 
     $service          = new CategoryService();
-    echo json_encode($service->InsertCategory($name,$image,$description,$parentCategory,$brand,$count));
+    echo json_encode($service->InsertCategory($name,$image,$description,$parentCategory,$count));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -48,7 +47,7 @@ $app->put('/api/categories/update/{id}', function ($request, $response, $args) {
     //$count          = $request->getParam('count');
 
     $service = new CategoryService();
-    echo json_encode($service->UpdateCategory($id,$name,$image,$description,$parentCategory,$brand));
+    echo json_encode($service->UpdateCategory($id,$name,$image,$description,$parentCategory));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 

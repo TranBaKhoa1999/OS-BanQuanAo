@@ -23,11 +23,10 @@ $app->get('/api/attributes/{id}', function ($request, $response, $args) {
 });
 //add brand
 $app->post('/api/attributes/add', function ($request, $response, $args) {
-    $name           = $request->getParam('name');
-    $logo           = $request->getParam('logo');
-    $description    = $request->getParam('description');
+    $size           = $request->getParam('size');
+    $color           = $request->getParam('color');
     $service = new AttributeService();
-    echo json_encode($service->AddAttribute($name,$logo,$description));
+    echo json_encode($service->InsertAttribute($size,$color));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
@@ -35,12 +34,11 @@ $app->post('/api/attributes/add', function ($request, $response, $args) {
 $app->put('/api/attributes/update/{id}', function ($request, $response, $args) {
 
     $id     = $request->getAttribute('id');
-    $name   = $request->getParam('name');
-    $logo   = $request->getParam('logo');
-    $description = $request->getParam('description');
+    $size   = $request->getParam('size');
+    $color   = $request->getParam('color');
 
     $service = new AttributeService();
-    echo json_encode($service->UpdateAttribute($id,$name,$logo,$description));
+    echo json_encode($service->UpdateAttribute($id,$size,$color));
     return $response->withHeader('Content-type', 'application/json;charset=UTF-8');
 });
 
