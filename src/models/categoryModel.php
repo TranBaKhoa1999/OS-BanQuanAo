@@ -74,7 +74,8 @@ require_once "../src/config/db.php";
 
         // ------------------------------------------ UPDATE ------------------------------------------
         public function Update($id,$name,$image,$description,$parentCategory){
-            $sql = "UPDATE category SET name = :name, image =:image, description =:description, parentcategory =:parentCategory,brand =:brand WHERE id = $id";
+
+            $sql = "UPDATE category SET name = :name, image =:image, description =:description, parentcategory =:parentCategory WHERE id = $id";
             $data = $this->runQuery($sql);
 
             $data->bindParam(':name',$name);
